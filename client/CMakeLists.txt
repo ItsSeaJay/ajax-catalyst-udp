@@ -9,3 +9,10 @@ find_package(SFML 2.5 COMPONENTS network REQUIRED)
 # Add an executable to the project
 add_executable(${PROJECT_NAME}Client
                ${SOURCES})
+
+# Link the appropriate libraries
+target_link_libraries(${PROJECT_NAME}Client sfml-network)
+
+if(UNIX)
+	target_link_libraries(${PROJECT_NAME}Client pthread)
+endif(UNIX)

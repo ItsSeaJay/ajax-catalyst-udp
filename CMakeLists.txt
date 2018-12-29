@@ -6,3 +6,4 @@ project(AjaxCatalyst)
 
 # Add subdirectories for each executable file
 add_subdirectory(client)
+add_subdirectory(server)
