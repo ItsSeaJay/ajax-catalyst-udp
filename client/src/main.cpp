@@ -5,7 +5,6 @@
 
 int main(int argc, char** argv)
 {
-	const unsigned short port = (argc > 1) ? atoi(argv[1]) : 6567;
 	sf::UdpSocket socket;
 	AjaxCatalyst::Client* client = new AjaxCatalyst::Client();
 
@@ -13,6 +12,7 @@ int main(int argc, char** argv)
 	{
 		sf::Packet packet;
 		sf::IpAddress address = "localhost";
+		const unsigned short port = 6567;
 		std::string message;
 
 		std::cout << "Started a client on port "
