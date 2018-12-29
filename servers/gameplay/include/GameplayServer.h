@@ -1,9 +1,11 @@
-#pragma once // Only include this file once
+// Only allow this file to be included once
+#pragma once
 
-#ifndef ACGS_SERVER_H
-#define ACGS_SERVER_H
+#ifndef AJAX_CATALYST_GAMEPLAY_SERVER_H
+#define AJAX_CATALYST_GAMEPLAY_SERVER_H
 
 #include <iostream>
+#include <list>
 
 #include "SFML/Network.hpp"
 
@@ -21,8 +23,13 @@ namespace AjaxCatalyst
 			const bool& isOnline() const;
 
 		private:
-			bool mOnline = true;
+			// Whether the server is connected to the internet
+			// This starts off false because the port number might be invalid
+			bool mOnline = false;
 			const unsigned short& mPort;
+			const unsigned short& mCapacity = 32;
+
+			sf::UdpSocket mSocket;
 	};
 }
 

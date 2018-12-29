@@ -13,6 +13,13 @@ void AjaxCatalyst::GameplayServer::start()
 	          << mPort
 	          << "..."
 	          << std::endl;
+
+	// Bind the member socket to the specified port
+	if (mSocket.bind(mPort) == sf::Socket::Done)
+	{
+		// The port is free
+		mOnline = true;
+	}
 }
 
 const bool& AjaxCatalyst::GameplayServer::isOnline() const
