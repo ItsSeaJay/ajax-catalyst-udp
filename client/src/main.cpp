@@ -17,6 +17,7 @@ int main(int argc, char** argv)
 
 		std::cout << "Started a client on port "
 		          << socket.getLocalPort()
+		          << "..."
 		          << std::endl;
 
 		packet << message;

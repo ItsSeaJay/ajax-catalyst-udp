@@ -29,30 +29,23 @@ const bool& AjaxCatalyst::GameplayServer::isOnline() const
 
 void AjaxCatalyst::GameplayServer::serve()
 {
-	// Listen for incoming clients
-	if (mSocketSelector.wait())
-	{
-		if (mSocketSelector.isReady(mSocket))
-		{
-			// Create containers to store the data of the new connection
-			sf::Packet connectionPacket;
-			sf::IpAddress address;
-			unsigned short port;
+	// Create containers to store the data of the new connection
+	sf::Packet connectionPacket;
+	sf::IpAddress address;
+	unsigned short port;
 
-			if (mSocket.receive(connectionPacket, address, port) == sf::Socket::Done)
-			{
-				// Display who just sent information
-				std::cout << "A wild connection appeared!"
-				          << std::endl;
-				std::cout << "Address: "
-				          << address
-				          << std::endl;
-				std::cout << "Port: "
-				          << port
-				          << std::endl;
-			}
-		}
-	}
+	// Wait until a packet is received
+	mSocket.receive(connectionPacket, address, port);
+
+	// Display who just sent information
+	std::cout << "A wild connection appeared!"
+	          << std::endl;
+	std::cout << "Address: "
+	          << address
+	          << std::endl;
+	std::cout << "Port: "
+	          << port
+	          << std::endl;
 }
 
 void AjaxCatalyst::GameplayServer::stop()
