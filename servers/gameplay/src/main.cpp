@@ -1,8 +1,23 @@
 #include <iostream>
 
+#include "GameplayServer.h"
+
 int main(int argc, char** argv)
 {
-	std::cout << "AjaxCatalystGameplayServer" << std::endl;
+	unsigned const short port = 6567;
+	AjaxCatalyst::GameplayServer* server = new AjaxCatalyst::GameplayServer(port);
 
-	return 0;
+	server->start();
+
+	// Run the main loop
+	do
+	{
+		server->serve();
+	} while (server->isOnline());
+
+	// Deallocate the server from memory
+	delete server;
+	server = nullptr;
+
+	return EXIT_SUCCESS;
 }
