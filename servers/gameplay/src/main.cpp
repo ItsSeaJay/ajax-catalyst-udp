@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 	unsigned const short port = (argc > 1) ? atoi(argv[1]) : 6567;
 	AjaxCatalyst::GameplayServer* server = new AjaxCatalyst::GameplayServer(port);
 
-	// Attempts to bind a socket to the given port number
+	// Attempt to bind a socket to the given port number
 	server->start();
 
 	// If the socket is bound,
@@ -17,6 +17,9 @@ int main(int argc, char** argv)
 	{
 		server->serve();
 	}
+
+	// Stop the server from running
+	server->stop();
 
 	// Deallocate the server from memory
 	delete server;

@@ -17,8 +17,10 @@ namespace AjaxCatalyst
 			GameplayServer(const unsigned short& port);
 			~GameplayServer();
 
+			// Server events
 			void start();
 			void serve();
+			void stop();
 
 			const bool& isOnline() const;
 
@@ -26,10 +28,16 @@ namespace AjaxCatalyst
 			// Whether the server is connected to the internet
 			// This starts off false because the port number might be invalid
 			bool mOnline = false;
+			
+			// The port number this server is bound to
 			const unsigned short& mPort;
-			const unsigned short& mCapacity = 32;
 
+			// The maximum amount of clients this server can handle
+			const unsigned short& mCapacity = 8;
+
+			// The socket used to listen for new connections
 			sf::UdpSocket mSocket;
+			sf::SocketSelector mSocketSelector;
 	};
 }
 
