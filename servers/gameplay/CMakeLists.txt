@@ -7,9 +7,9 @@ find_package(SFML 2.5 COMPONENTS network REQUIRED)
 
 include_directories(include)
 
-add_executable(${PROJECT_NAME}GameplayServer smfl-network)
+add_executable(${PROJECT_NAME}GameplayServer ${SOURCES})
 
 if(UNIX)
 	target_link_libraries(${PROJECT_NAME}GameplayServer
-	                      sfml-network)
+	                      pthread)
 endif(UNIX)

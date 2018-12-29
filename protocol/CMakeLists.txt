@@ -7,9 +7,9 @@ find_package(SFML 2.5 COMPONENTS network REQUIRED)
 
 include_directories(include)
 
-add_executable(${PROJECT_NAME}ChattingServer ${SOURCES})
+add_library(${PROJECT_NAME}Protocol ${SOURCES})
 
 if(UNIX)
-	target_link_libraries(${PROJECT_NAME}ChattingServer
+	target_link_libraries(${PROJECT_NAME}Protocol
 	                      pthread)
 endif(UNIX)
