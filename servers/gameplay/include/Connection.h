@@ -15,7 +15,7 @@ namespace AjaxCatalyst
 	private:
 		sf::IpAddress mAddress;
 		const unsigned short mPort;
-	}
+	};
 }
 
 #endif

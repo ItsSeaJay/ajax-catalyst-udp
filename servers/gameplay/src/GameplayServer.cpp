@@ -36,15 +36,20 @@ void AjaxCatalyst::GameplayServer::serve()
 	{
 		if (mSocketSelector.isReady(mSocket))
 		{
+			// Create containers to store the information of the pending connection
 			sf::Packet connectionPacket;
 			sf::IpAddress address;
 			unsigned short port;
 
-			// React differently depending on what kind of 
+			// React differently depending on how the packet is received
 			switch(mSocket.receive(connectionPacket, address, port))
 			{
 				case sf::Socket::Done:
-					std::cout << "Done" << std::endl;
+					std::cout << "New connection attempt from "
+						<< address
+						<< ':'
+						<< port
+						<< std::endl; 
 					break;
 				default:
 					std::cerr << "Error: Unhandled packet" << std::endl;

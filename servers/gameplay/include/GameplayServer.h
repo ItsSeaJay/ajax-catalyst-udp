@@ -7,6 +7,7 @@
 #include <list>
 
 #include "SFML/Network.hpp"
+#include "Connection.h"
 
 namespace AjaxCatalyst
 {
@@ -36,7 +37,12 @@ namespace AjaxCatalyst
 
 			// The socket used to listen for new connections
 			sf::UdpSocket mSocket;
+			
+			// Multiplexer used to read from different sockets on the same thread
 			sf::SocketSelector mSocketSelector;
+
+			// All of the clients currently connected to the server
+			std::list<Connection*> mClients;
 	};
 }
 
