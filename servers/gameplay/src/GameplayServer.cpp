@@ -19,6 +19,9 @@ void AjaxCatalyst::GameplayServer::start()
 	{
 		// The port is free
 		mOnline = true;
+
+		// Add the listening socket to the selector for later use
+		mSocketSelector.add(mSocket);
 	}
 }
 
@@ -34,18 +37,15 @@ void AjaxCatalyst::GameplayServer::serve()
 	sf::IpAddress address;
 	unsigned short port;
 
-	// Wait until a packet is received
-	mSocket.receive(connectionPacket, address, port);
-
-	// Display who just sent information
-	std::cout << "A wild connection appeared!"
-	          << std::endl;
-	std::cout << "Address: "
-	          << address
-	          << std::endl;
-	std::cout << "Port: "
-	          << port
-	          << std::endl;
+	// Wait until any socket receives data
+	if (mSocketSelector.wait())
+	{
+		if (mSocketSelector.isReady(mSocket))
+		{
+			std::cout << "ready";
+		}
+	}
+	
 }
 
 void AjaxCatalyst::GameplayServer::stop()

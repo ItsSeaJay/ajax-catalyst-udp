@@ -1,4 +1,3 @@
-// Only allow this file to be included once
 #pragma once
 
 #ifndef AJAX_CATALYST_GAMEPLAY_SERVER_H
@@ -33,7 +32,7 @@ namespace AjaxCatalyst
 			const unsigned short& mPort;
 
 			// The maximum amount of clients this server can handle
-			const unsigned short& mCapacity = 8;
+			const unsigned short& mCapacity = 32;
 
 			// The socket used to listen for new connections
 			sf::UdpSocket mSocket;
