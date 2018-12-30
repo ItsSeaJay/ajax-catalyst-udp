@@ -40,9 +40,27 @@ void AjaxCatalyst::GameplayServer::serve()
 			sf::IpAddress address;
 			unsigned short port;
 
-			mSocket.receive(connectionPacket, address, port);
-
-			std::cout << "moo" << std::endl;
+			switch(mSocket.receive(connectionPacket, address, port))
+			{
+				case sf::Socket::Done:
+					std::cout << "Done" << std::endl;
+					break;
+				case sf::Socket::NotReady:
+					std::cout << "NotReady" << std::endl;
+					break;
+				case sf::Socket::Partial:
+					std::cout << "Partial" << std::endl;
+					break;
+				case sf::Socket::Disconnected:
+					std::cout << "Disconnected" << std::endl;
+					break;
+				case sf::Socket::Error:
+					std::cout << "Error" << std::endl;
+					break;
+				default:
+					std::cout << "default" << std::endl;
+					break;
+			}
 		}
 	}
 	
