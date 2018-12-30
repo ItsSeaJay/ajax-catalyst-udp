@@ -40,25 +40,14 @@ void AjaxCatalyst::GameplayServer::serve()
 			sf::IpAddress address;
 			unsigned short port;
 
+			// React differently depending on what kind of 
 			switch(mSocket.receive(connectionPacket, address, port))
 			{
 				case sf::Socket::Done:
 					std::cout << "Done" << std::endl;
 					break;
-				case sf::Socket::NotReady:
-					std::cout << "NotReady" << std::endl;
-					break;
-				case sf::Socket::Partial:
-					std::cout << "Partial" << std::endl;
-					break;
-				case sf::Socket::Disconnected:
-					std::cout << "Disconnected" << std::endl;
-					break;
-				case sf::Socket::Error:
-					std::cout << "Error" << std::endl;
-					break;
 				default:
-					std::cout << "default" << std::endl;
+					std::cerr << "Error: Unhandled packet" << std::endl;
 					break;
 			}
 		}

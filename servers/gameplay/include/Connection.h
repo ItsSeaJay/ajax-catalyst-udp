@@ -11,8 +11,6 @@ namespace AjaxCatalyst
 	{
 	public:
 		Connection(const sf::IpAddress& address, const unsigned short& port);
-		Connection();
-		~Connection();
 
 	private:
 		sf::IpAddress mAddress;

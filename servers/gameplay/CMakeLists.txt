@@ -1,7 +1,8 @@
 # Create lists of all the source files used by this section of the project
 set(SOURCES
 	src/main.cpp
-	src/GameplayServer.cpp)
+	src/GameplayServer.cpp
+	src/Connection.cpp)
 set(INCLUDES
 	include/GameplayServer.h
 	include/Connection.h)
