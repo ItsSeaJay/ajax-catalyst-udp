@@ -32,17 +32,17 @@ const bool& AjaxCatalyst::GameplayServer::isOnline() const
 
 void AjaxCatalyst::GameplayServer::serve()
 {
-	// Create containers to store the data of the new connection
-	sf::Packet connectionPacket;
-	sf::IpAddress address;
-	unsigned short port;
-
-	// Wait until any socket receives data
 	if (mSocketSelector.wait())
 	{
 		if (mSocketSelector.isReady(mSocket))
 		{
-			std::cout << "ready";
+			sf::Packet connectionPacket;
+			sf::IpAddress address;
+			unsigned short port;
+
+			mSocket.receive(connectionPacket, address, port);
+
+			std::cout << "moo" << std::endl;
 		}
 	}
 	

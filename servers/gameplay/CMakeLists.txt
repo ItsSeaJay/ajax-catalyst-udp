@@ -3,7 +3,8 @@ set(SOURCES
 	src/main.cpp
 	src/GameplayServer.cpp)
 set(INCLUDES
-	include/GameplayServer.h)
+	include/GameplayServer.h
+	include/Connection.h)
 
 # Find SFML
 find_package(SFML 2.5 COMPONENTS system network REQUIRED)
