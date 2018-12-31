@@ -17,10 +17,18 @@ void AjaxCatalyst::GameplayServer::start()
 	// Bind the member socket to the specified port
 	mOnline = (mSocket.bind(mPort) == sf::Socket::Done);
 
-	if(mOnline)
+	if (mOnline)
 	{
 		// Add the listening socket to the selector for later use
 		mSocketSelector.add(mSocket);
+
+		// Create the graphical user interface
+		mWindow.create
+		(
+			sf::VideoMode(1024, 768),
+			"AjaxCatalystGameplayServer",
+			sf::Style::Default
+		);
 	}
 }
 
@@ -29,7 +37,7 @@ const bool& AjaxCatalyst::GameplayServer::isOnline() const
 	return mOnline;
 }
 
-void AjaxCatalyst::GameplayServer::run()
+void AjaxCatalyst::GameplayServer::run(const float& deltaTime)
 {
 	if (mSocketSelector.wait())
 	{
@@ -57,6 +65,36 @@ void AjaxCatalyst::GameplayServer::run()
 		}
 	}
 	
+}
+
+void AjaxCatalyst::GameplayServer::pollEvents()
+{
+	sf::Event event;
+
+	while (mWindow.pollEvent(event))
+	{
+		switch (event.type)
+		{
+		case sf::Event::Closed:
+			mWindow.close();
+			mOnline = false;
+			break;
+		case sf::Event::Resized:
+			// Update the view to the new size of the window
+			sf::FloatRect visibleArea(0, 0, float(event.size.width), float(event.size.height));
+			mWindow.setView(sf::View(visibleArea));
+			break;
+		}
+	}
+}
+
+void AjaxCatalyst::GameplayServer::display()
+{
+	mWindow.clear();
+
+	// Draw GUI here...
+
+	mWindow.display();
 }
 
 void AjaxCatalyst::GameplayServer::stop()

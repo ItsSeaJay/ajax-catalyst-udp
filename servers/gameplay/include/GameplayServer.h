@@ -6,10 +6,10 @@
 #include <iostream>
 #include <list>
 
+#include "SFML/Graphics.hpp"
 #include "SFML/Network.hpp"
 
 #include "Connection.h"
-#include "GraphicalUserInterface.h"
 
 namespace AjaxCatalyst
 {
@@ -20,14 +20,16 @@ namespace AjaxCatalyst
 			~GameplayServer();
 
 			void start();
-			void run();
+			void run(const float& deltaTime);
+			void pollEvents();
+			void display();
 			void stop();
 
 			const bool& isOnline() const;
 
 		private:
-			// The graphical user interface used to interact with the server
-			GraphicalUserInterface mGUI;
+			// The graphical user interface of the server
+			sf::RenderWindow mWindow;
 
 			// Whether the server is connected to the internet
 			// This starts off false because the port number might be invalid
