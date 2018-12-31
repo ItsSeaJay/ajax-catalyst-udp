@@ -33,8 +33,8 @@ int main(int argc, char** argv)
 			// We managed to handle some game logic in time!
 			lag -= frameLimit;
 
-			// Run the server with the difference between frames as a parameter
-			server->run(frameLimit.asSeconds());
+			// This needs to be on its own thread as it contains blocking operations
+			server->run();
 
 			// Poll all the events from the servers window and handle them
 			server->pollEvents();

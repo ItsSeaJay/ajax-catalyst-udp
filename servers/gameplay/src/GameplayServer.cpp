@@ -25,8 +25,8 @@ void AjaxCatalyst::GameplayServer::start()
 		// Create the graphical user interface
 		mWindow.create
 		(
-			sf::VideoMode(1024, 768),
-			"AjaxCatalystGameplayServer",
+			sf::VideoMode(1024, 768), // Resolution
+			"AjaxCatalystGameplayServer", // Title
 			sf::Style::Default
 		);
 	}
@@ -49,20 +49,20 @@ void AjaxCatalyst::GameplayServer::run(const float& deltaTime)
 			unsigned short port;
 
 			// React differently depending on how the packet is received
-			switch (mSocket.receive(connectionPacket, address, port))
-			{
-				case sf::Socket::Done:
-					std::cout << "New connection attempt from "
-						<< address
-						<< ':'
-						<< port
-						<< std::endl; 
-					break;
-				default:
-					std::cerr << "Error: Unhandled packet" << std::endl;
-					break;
-			}
-		}
+		// 	switch (mSocket.receive(connectionPacket, address, port))
+		// 	{
+		// 		case sf::Socket::Done:
+		// 			std::cout << "New connection attempt from "
+		// 				<< address
+		// 				<< ':'
+		// 				<< port
+		// 				<< std::endl; 
+		// 			break;
+		// 		default:
+		// 			std::cerr << "Error: Unhandled packet" << std::endl;
+		// 			break;
+		// 	}
+		// }
 	}
 	
 }
