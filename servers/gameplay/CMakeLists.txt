@@ -14,7 +14,7 @@ set(INCLUDES
 	include/GraphicalUserInterface.h)
 
 # Find SFML
-find_package(SFML 2.5 COMPONENTS system graphics network REQUIRED)
+find_package(SFML 2.5 COMPONENTS system graphics window network REQUIRED)
 
 include_directories(include)
 
@@ -26,6 +26,7 @@ add_executable(${EXECUTABLE_NAME}
 target_link_libraries(${EXECUTABLE_NAME}
                       sfml-system
                       sfml-graphics
+                      sfml-window
                       sfml-network)
 
 # Also remember to link the pthread dependancy on Unix systems for concurrency
