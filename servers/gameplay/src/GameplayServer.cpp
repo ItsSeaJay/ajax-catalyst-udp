@@ -15,11 +15,10 @@ void AjaxCatalyst::GameplayServer::start()
 	          << std::endl;
 
 	// Bind the member socket to the specified port
-	if (mSocket.bind(mPort) == sf::Socket::Done)
-	{
-		// The port is free
-		mOnline = true;
+	mOnline = (mSocket.bind(mPort) == sf::Socket::Done);
 
+	if(mOnline)
+	{
 		// Add the listening socket to the selector for later use
 		mSocketSelector.add(mSocket);
 	}
@@ -30,7 +29,7 @@ const bool& AjaxCatalyst::GameplayServer::isOnline() const
 	return mOnline;
 }
 
-void AjaxCatalyst::GameplayServer::serve()
+void AjaxCatalyst::GameplayServer::run()
 {
 	if (mSocketSelector.wait())
 	{

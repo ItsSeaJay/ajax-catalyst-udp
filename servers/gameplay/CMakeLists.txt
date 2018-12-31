@@ -6,10 +6,12 @@ set(EXECUTABLE_NAME
 set(SOURCES
 	src/main.cpp
 	src/GameplayServer.cpp
-	src/Connection.cpp)
+	src/Connection.cpp
+	src/GraphicalUserInterface.cpp)
 set(INCLUDES
 	include/GameplayServer.h
-	include/Connection.h)
+	include/Connection.h
+	include/GraphicalUserInterface.h)
 
 # Find SFML
 find_package(SFML 2.5 COMPONENTS system graphics network REQUIRED)

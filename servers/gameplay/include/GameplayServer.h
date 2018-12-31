@@ -7,7 +7,9 @@
 #include <list>
 
 #include "SFML/Network.hpp"
+
 #include "Connection.h"
+#include "GraphicalUserInterface.h"
 
 namespace AjaxCatalyst
 {
@@ -17,14 +19,16 @@ namespace AjaxCatalyst
 			GameplayServer(const unsigned short& port);
 			~GameplayServer();
 
-			// Server events
 			void start();
-			void serve();
+			void run();
 			void stop();
 
 			const bool& isOnline() const;
 
 		private:
+			// The graphical user interface used to interact with the server
+			GraphicalUserInterface mGUI;
+
 			// Whether the server is connected to the internet
 			// This starts off false because the port number might be invalid
 			bool mOnline = false;

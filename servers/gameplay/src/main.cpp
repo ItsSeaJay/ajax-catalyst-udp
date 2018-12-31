@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "SFML/System.hpp"
 #include "GameplayServer.h"
 
 int main(int argc, char** argv)
@@ -15,13 +16,13 @@ int main(int argc, char** argv)
 	// If the socket is bound, run the main loop
 	while (server->isOnline())
 	{
-		server->serve();
+		server->run();
 	}
 
 	// Stop the server from running
 	server->stop();
 
-	// Deallocate the server from memory
+	// Deallocate the server pointer from memory
 	delete server;
 	server = nullptr;
 
