@@ -37,7 +37,7 @@ void AjaxCatalyst::GameplayServer::serve()
 {
 	while (mWindow.isOpen())
 	{
-		if (mSocketSelector.wait())
+		if (mSocketSelector.wait(sf::milliseconds(100)))
 		{
 			if (mSocketSelector.isReady(mSocket))
 			{
@@ -104,7 +104,6 @@ void AjaxCatalyst::GameplayServer::pollEvents()
 			{
 			case sf::Event::Closed:
 				mWindow.close();
-				mSocket.unbind();
 				break;
 			case sf::Event::Resized:
 				// Update the view to the new size of the window
@@ -127,5 +126,6 @@ void AjaxCatalyst::GameplayServer::display()
 
 void AjaxCatalyst::GameplayServer::stop()
 {
-	// Shut down the server
+	// Unbind the UDP port so that other programs can use it
+	mSocket.unbind();
 }
