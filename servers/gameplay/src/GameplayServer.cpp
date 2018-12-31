@@ -42,7 +42,7 @@ void AjaxCatalyst::GameplayServer::serve()
 			unsigned short port;
 
 			// React differently depending on how the packet is received
-			switch(mSocket.receive(connectionPacket, address, port))
+			switch (mSocket.receive(connectionPacket, address, port))
 			{
 				case sf::Socket::Done:
 					std::cout << "New connection attempt from "
