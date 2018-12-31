@@ -14,10 +14,10 @@ int main(int argc, char** argv)
 	if (server->start())
 	{
 		std::thread servingThread(&AjaxCatalyst::GameplayServer::serve, server);
-		std::thread updateThread(&AjaxCatalyst::GameplayServer::update, server);
+
+		server->update();
 
 		servingThread.join();
-		updateThread.join();
 	}
 
 	// Stop the server from running
