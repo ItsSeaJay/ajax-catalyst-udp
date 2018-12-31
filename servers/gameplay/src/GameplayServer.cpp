@@ -99,19 +99,17 @@ void AjaxCatalyst::GameplayServer::pollEvents()
 
 	while (mWindow.pollEvent(event))
 	{
-		mMutex.lock();
-			switch (event.type)
-			{
-			case sf::Event::Closed:
-				mWindow.close();
-				break;
-			case sf::Event::Resized:
-				// Update the view to the new size of the window
-				sf::FloatRect visibleArea(0, 0, float(event.size.width), float(event.size.height));
-				mWindow.setView(sf::View(visibleArea));
-				break;
-			}
-		mMutex.unlock();
+		switch (event.type)
+		{
+		case sf::Event::Closed:
+			mWindow.close();
+			break;
+		case sf::Event::Resized:
+			// Update the view to the new size of the window
+			sf::FloatRect visibleArea(0, 0, float(event.size.width), float(event.size.height));
+			mWindow.setView(sf::View(visibleArea));
+			break;
+		}
 	}
 }
 

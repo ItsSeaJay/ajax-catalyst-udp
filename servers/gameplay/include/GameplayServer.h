@@ -29,8 +29,6 @@ namespace AjaxCatalyst
 			void stop();
 
 		private:
-			std::mutex mMutex;
-
 			// The graphical user interface of the server
 			sf::RenderWindow mWindow;
 
