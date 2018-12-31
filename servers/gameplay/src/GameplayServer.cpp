@@ -6,7 +6,7 @@ AjaxCatalyst::GameplayServer::GameplayServer(const unsigned short& port)
 
 AjaxCatalyst::GameplayServer::~GameplayServer() {}
 
-void AjaxCatalyst::GameplayServer::start()
+bool AjaxCatalyst::GameplayServer::start()
 {
 	// Notify the user that the server has started
 	std::cout << "Started an AjaxCatalystGameplayServer on port "
@@ -14,10 +14,7 @@ void AjaxCatalyst::GameplayServer::start()
 	          << "..."
 	          << std::endl;
 
-	// Bind the member socket to the specified port
-	mOnline = (mSocket.bind(mPort) == sf::Socket::Done);
-
-	if (mOnline)
+	if (mSocket.bind(mPort) == sf::Socket::Done)
 	{
 		// Add the listening socket to the selector for later use
 		mSocketSelector.add(mSocket);
@@ -29,42 +26,71 @@ void AjaxCatalyst::GameplayServer::start()
 			"AjaxCatalystGameplayServer", // Title
 			sf::Style::Default
 		);
+
+		return true;
 	}
+
+	return false;
 }
 
-const bool& AjaxCatalyst::GameplayServer::isOnline() const
+void AjaxCatalyst::GameplayServer::serve()
 {
-	return mOnline;
-}
-
-void AjaxCatalyst::GameplayServer::run(const float& deltaTime)
-{
-	if (mSocketSelector.wait())
+	while (mWindow.isOpen())
 	{
-		if (mSocketSelector.isReady(mSocket))
+		if (mSocketSelector.wait())
 		{
-			// Create containers to store the information of the pending connection
-			sf::Packet connectionPacket;
-			sf::IpAddress address;
-			unsigned short port;
+			if (mSocketSelector.isReady(mSocket))
+			{
+				// Create containers to store the information of the pending connection
+				sf::Packet connectionPacket;
+				sf::IpAddress address;
+				unsigned short port;
 
-			// React differently depending on how the packet is received
-		// 	switch (mSocket.receive(connectionPacket, address, port))
-		// 	{
-		// 		case sf::Socket::Done:
-		// 			std::cout << "New connection attempt from "
-		// 				<< address
-		// 				<< ':'
-		// 				<< port
-		// 				<< std::endl; 
-		// 			break;
-		// 		default:
-		// 			std::cerr << "Error: Unhandled packet" << std::endl;
-		// 			break;
-		// 	}
-		// }
+				// React differently depending on how the packet is received
+				switch (mSocket.receive(connectionPacket, address, port))
+				{
+					case sf::Socket::Done:
+						std::cout << "New connection attempt from "
+							<< address
+							<< ':'
+							<< port
+							<< std::endl; 
+						break;
+					default:
+						std::cerr << "Error: Unhandled packet" << std::endl;
+						break;
+				}
+			}
+		}
 	}
-	
+}
+
+void AjaxCatalyst::GameplayServer::update()
+{
+	// Create all the timers necessary to handle volatile GUI render times
+	sf::Clock clock;
+	sf::Time lag = sf::Time::Zero;
+	const sf::Time frameLimit = sf::seconds(1.0f / 60.0f); // 60 FPS limit
+
+	while (mWindow.isOpen())
+	{
+		// Get how much time has elapsed since the server started
+		sf::Time elapsedTime = clock.restart();
+
+		// Accumulated lag depending on how long this GUI frame took to render
+		lag += elapsedTime;
+
+		// Perform UI functions until there is no lag remaining
+		while (lag > frameLimit)
+		{
+			// We managed to render something in time!
+			lag -= elapsedTime;
+
+			pollEvents();
+		}
+
+		display();
+	}
 }
 
 void AjaxCatalyst::GameplayServer::pollEvents()
@@ -73,18 +99,20 @@ void AjaxCatalyst::GameplayServer::pollEvents()
 
 	while (mWindow.pollEvent(event))
 	{
-		switch (event.type)
-		{
-		case sf::Event::Closed:
-			mWindow.close();
-			mOnline = false;
-			break;
-		case sf::Event::Resized:
-			// Update the view to the new size of the window
-			sf::FloatRect visibleArea(0, 0, float(event.size.width), float(event.size.height));
-			mWindow.setView(sf::View(visibleArea));
-			break;
-		}
+		mMutex.lock();
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+				mWindow.close();
+				mSocket.unbind();
+				break;
+			case sf::Event::Resized:
+				// Update the view to the new size of the window
+				sf::FloatRect visibleArea(0, 0, float(event.size.width), float(event.size.height));
+				mWindow.setView(sf::View(visibleArea));
+				break;
+			}
+		mMutex.unlock();
 	}
 }
 
@@ -99,6 +127,5 @@ void AjaxCatalyst::GameplayServer::display()
 
 void AjaxCatalyst::GameplayServer::stop()
 {
-	// Unbind the port number so that something else can use it
-	mSocket.unbind();
+	// Shut down the server
 }

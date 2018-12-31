@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <list>
+#include <mutex>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -20,22 +21,19 @@ namespace AjaxCatalyst
 			GameplayServer(const unsigned short& port);
 			~GameplayServer();
 
-			void start();
-			void run(const float& deltaTime);
+			bool start();
+			void serve();
+			void update();
 			void pollEvents();
 			void display();
 			void stop();
 
-			const bool& isOnline() const;
-
 		private:
+			std::mutex mMutex;
+
 			// The graphical user interface of the server
 			sf::RenderWindow mWindow;
 
-			// Whether the server is connected to the internet
-			// This starts off false because the port number might be invalid
-			bool mOnline = false;
-			
 			// The port number this server is bound to
 			const unsigned short& mPort;
 
