@@ -10,11 +10,10 @@ void AjaxCatalyst::GameplayServer::start()
 {
 	mLog.start();
 
-	// Notify the user that the server has started
-	mLog << "Started an AjaxCatalystGameplayServer on port " << mPort << "...\n";
-
 	if (mSocket.bind(mPort) == sf::Socket::Done)
 	{
+		mLog << "Started an AjaxCatalystGameplayServer on port " << "...\n";
+		
 		// Add the listening socket to the selector for later use
 		mSocketSelector.add(mSocket);
 

@@ -25,21 +25,15 @@ namespace AjaxCatalyst
 		Log& operator<<(const T& output)
 		{
 			mMutex.lock();
-				// Output the content to the console
 				std::cout << output;
-			mMutex.unlock();
-
-			mMutex.lock();
-				// Also output it to the specified file on disk
 				mFile << output;
 			mMutex.unlock();
 		}
 
 	private:
-		const std::string& mFilename = "log.txt";
-
+		const std::string mFilename = "log.txt";
+		
 		std::ofstream mFile;
-
 		std::mutex mMutex;
 	};
 }
