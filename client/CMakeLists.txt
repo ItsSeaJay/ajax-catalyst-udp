@@ -13,7 +13,7 @@ find_package(SFML 2.5 COMPONENTS network REQUIRED)
 include_directories(include)
 
 # Add an executable to the project
-add_executable(${PROJECT_NAME}Client
+add_library(${PROJECT_NAME}Client
                ${SOURCES}
                ${INCLUDES})
 
