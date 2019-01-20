@@ -20,9 +20,10 @@ int main(int argc, char** argv)
 
 		// First, we start updating the server's interface
 		server->update();
-		// Then we start listening for network traffic afterward.
-		// If we start the thread first, it will block the interface from 
-		// updating, meaning that the application will become unresponsive.
+
+		// Then, we start listening for network traffic
+		// If we join the thread first, it will block the interface from 
+		// updating, meaning that the application will become unresponsive
 		listeningThread.join();
 	}
 
