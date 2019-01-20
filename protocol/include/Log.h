@@ -4,8 +4,9 @@
 #define AJAX_CATALYST_PROTOCOL_LOG_H
 
 #include <iostream>
+#include <string>
 
-namespace AjaxCatalystProtocol
+namespace AjaxCatalyst
 {
 	class Log
 	{
@@ -13,9 +14,14 @@ namespace AjaxCatalystProtocol
 		Log();
 		~Log();
 
+		Log operator<<(const std::string s)
+		{
+			std::cout << s;
+		}
+
 	private:
 		// File name etc...
-	}
+	};
 }
 
 #endif // AJAX_CATALYST_PROTOCOL_LOG_H

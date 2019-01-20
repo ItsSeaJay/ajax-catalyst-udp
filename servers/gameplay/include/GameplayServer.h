@@ -12,6 +12,7 @@
 #include "SFML/Network.hpp"
 
 #include "Connection.h"
+#include "Log.h"
 
 namespace AjaxCatalyst
 {
@@ -31,6 +32,9 @@ namespace AjaxCatalyst
 			bool isOnline() const;
 
 		private:
+			// The log that the server will output to
+			Log mLog;
+
 			// The graphical user interface of the server
 			sf::RenderWindow mWindow;
 

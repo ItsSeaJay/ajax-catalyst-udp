@@ -9,6 +9,7 @@ AjaxCatalyst::GameplayServer::~GameplayServer() {}
 void AjaxCatalyst::GameplayServer::start()
 {
 	// Notify the user that the server has started
+	mLog << "Log Test.";
 	std::cout << "Started an AjaxCatalystGameplayServer on port "
 	          << mPort
 	          << "..."

@@ -1,7 +1,7 @@
 #include "Log.h"
 
-AjaxCatalystProtocol::Log::Log()
+AjaxCatalyst::Log::Log()
 {}
 
-AjaxCatalystProtocol::Log::~Log()
+AjaxCatalyst::Log::~Log()
 {}
