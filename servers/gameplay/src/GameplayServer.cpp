@@ -8,13 +8,10 @@ AjaxCatalyst::GameplayServer::~GameplayServer() {}
 
 void AjaxCatalyst::GameplayServer::start()
 {
+	mLog.start();
+
 	// Notify the user that the server has started
-	mLog << "Test log.";
-	mLog << "One" << "Two" << "Three";
-	std::cout << "Started an AjaxCatalystGameplayServer on port "
-	          << mPort
-	          << "..."
-	          << std::endl;
+	mLog << "Started an AjaxCatalystGameplayServer on port " << mPort << "...\n";
 
 	if (mSocket.bind(mPort) == sf::Socket::Done)
 	{
@@ -49,11 +46,10 @@ void AjaxCatalyst::GameplayServer::listen()
 				switch (mSocket.receive(connectionPacket, address, port))
 				{
 					case sf::Socket::Done:
-						std::cout << "New connection attempt from "
+						mLog << "New connection attempt from "
 							<< address
 							<< ':'
-							<< port
-							<< std::endl; 
+							<< port; 
 						break;
 					default:
 						std::cerr << "Error: Unhandled packet" << std::endl;
@@ -125,6 +121,9 @@ void AjaxCatalyst::GameplayServer::stop()
 {
 	// Unbind the UDP port so that other programs can use it
 	mSocket.unbind();
+
+	// Prevent any more output to the server log
+	mLog.stop();
 }
 
 bool AjaxCatalyst::GameplayServer::isOnline() const

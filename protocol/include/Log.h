@@ -4,9 +4,9 @@
 #define AJAX_CATALYST_PROTOCOL_LOG_H
 
 #include <ctime>
-#include <chrono>
 #include <iostream>
 #include <fstream>
+#include <mutex>
 #include <string>
 
 namespace AjaxCatalyst
@@ -20,14 +20,27 @@ namespace AjaxCatalyst
 		void start();
 		void stop();
 
+		// This overload allows for the logger class to be used like std::cout
 		template <typename T>
 		Log& operator<<(const T& output)
 		{
-			std::cout << output;
+			mMutex.lock();
+				// Output the content to the console
+				std::cout << output;
+			mMutex.unlock();
+
+			mMutex.lock();
+				// Also output it to the specified file on disk
+				mFile << output;
+			mMutex.unlock();
 		}
 
 	private:
-		// File name etc...
+		const std::string& mFilename = "log.txt";
+
+		std::ofstream mFile;
+
+		std::mutex mMutex;
 	};
 }
 
