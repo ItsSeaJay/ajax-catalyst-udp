@@ -6,7 +6,7 @@ AjaxCatalyst::GameplayServer::GameplayServer(const unsigned short& port)
 
 AjaxCatalyst::GameplayServer::~GameplayServer() {}
 
-bool AjaxCatalyst::GameplayServer::start()
+void AjaxCatalyst::GameplayServer::start()
 {
 	// Notify the user that the server has started
 	std::cout << "Started an AjaxCatalystGameplayServer on port "
@@ -26,22 +26,19 @@ bool AjaxCatalyst::GameplayServer::start()
 			"AjaxCatalystGameplayServer", // Title
 			sf::Style::Default
 		);
-
-		return true;
 	}
-
-	return false;
 }
 
-void AjaxCatalyst::GameplayServer::serve()
+void AjaxCatalyst::GameplayServer::listen()
 {
-	while (mWindow.isOpen())
+	while (isOnline())
 	{
 		if (mSocketSelector.wait(sf::milliseconds(100)))
 		{
 			if (mSocketSelector.isReady(mSocket))
 			{
-				// Create containers to store the information of the pending connection
+				// Create containers to store the information of the
+				// pending connection
 				sf::Packet connectionPacket;
 				sf::IpAddress address;
 				unsigned short port;
@@ -72,7 +69,7 @@ void AjaxCatalyst::GameplayServer::update()
 	sf::Time lag = sf::Time::Zero;
 	const sf::Time frameLimit = sf::seconds(1.0f / 60.0f); // 60 FPS limit
 
-	while (mWindow.isOpen())
+	while (isOnline())
 	{
 		// Get how much time has elapsed since the server started
 		sf::Time elapsedTime = clock.restart();
@@ -126,4 +123,9 @@ void AjaxCatalyst::GameplayServer::stop()
 {
 	// Unbind the UDP port so that other programs can use it
 	mSocket.unbind();
+}
+
+bool AjaxCatalyst::GameplayServer::isOnline() const
+{
+	return mWindow.isOpen();
 }

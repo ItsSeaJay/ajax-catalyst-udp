@@ -11,13 +11,19 @@ int main(int argc, char** argv)
 	AjaxCatalyst::GameplayServer* server = new AjaxCatalyst::GameplayServer(port);
 
 	// If the socket is bound and the window is open, run the main loop
-	if (server->start())
+	server->start();
+
+	if (server->isOnline())
 	{
-		std::thread servingThread(&AjaxCatalyst::GameplayServer::serve, server);
+		// Create a new, standard thread for network listening
+		std::thread listeningThread(&AjaxCatalyst::GameplayServer::listen, server);
 
+		// First, we start updating the server's interface
 		server->update();
-
-		servingThread.join();
+		// Then we start listening for network traffic afterward.
+		// If we start the thread first, it will block the interface from 
+		// updating, meaning that the application will become unresponsive.
+		listeningThread.join();
 	}
 
 	// Stop the server from running

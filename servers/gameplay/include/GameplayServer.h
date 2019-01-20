@@ -21,12 +21,14 @@ namespace AjaxCatalyst
 			GameplayServer(const unsigned short& port);
 			~GameplayServer();
 
-			bool start();
-			void serve();
+			void start();
+			void listen();
 			void update();
 			void pollEvents();
 			void display();
 			void stop();
+
+			bool isOnline() const;
 
 		private:
 			// The graphical user interface of the server
