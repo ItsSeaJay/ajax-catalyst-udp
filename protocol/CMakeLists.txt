@@ -1,15 +1,13 @@
 # Create lists of all the source files used by this section of the project
+set(INCLUDES
+	include/Log.h)
 set(SOURCES
-    src/main.cpp)
+    src/Log.cpp)
 
-# Find SFML
-find_package(SFML 2.5 COMPONENTS network REQUIRED)
-
+# Add the include directories
 include_directories(include)
 
-add_library(${PROJECT_NAME}Protocol ${SOURCES})
-
-if(UNIX)
-	target_link_libraries(${PROJECT_NAME}Protocol
-	                      pthread)
-endif(UNIX)
+# Compile the sources and includes as a library
+add_library(${PROJECT_NAME}Protocol
+	${SOURCES}
+	${INCLUDES})

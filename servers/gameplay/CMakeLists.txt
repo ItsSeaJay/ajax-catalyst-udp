@@ -14,18 +14,27 @@ set(INCLUDES
 # Find SFML
 find_package(SFML 2.5 COMPONENTS system graphics window network REQUIRED)
 
+# Find the protocol library
+add_subdirectory(../../protocol)
+
+# Add the include directories for this executable
 include_directories(include)
 
+# Compile the sources and
 add_executable(${EXECUTABLE_NAME}
                ${SOURCES}
                ${INCLUDES})
 
-# Link SFML to the above executable
+# Link the necessary libraries to the above executable file
+# SFML
 target_link_libraries(${EXECUTABLE_NAME}
                       sfml-system
                       sfml-graphics
                       sfml-window
                       sfml-network)
+# AjaxCatalystProtocol
+target_link_libraries(${EXECUTABLE_NAME}
+	AjaxCatalystProtocol)
 
 # Also remember to link the pthread dependancy on Unix systems for concurrency
 if(UNIX)
