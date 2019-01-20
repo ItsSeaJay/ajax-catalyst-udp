@@ -3,7 +3,10 @@
 #ifndef AJAX_CATALYST_PROTOCOL_LOG_H
 #define AJAX_CATALYST_PROTOCOL_LOG_H
 
+#include <ctime>
+#include <chrono>
 #include <iostream>
+#include <fstream>
 #include <string>
 
 namespace AjaxCatalyst
@@ -14,9 +17,13 @@ namespace AjaxCatalyst
 		Log();
 		~Log();
 
-		Log operator<<(const std::string s)
+		void start();
+		void stop();
+
+		Log& operator<<(std::ostream& output)
 		{
-			std::cout << s;
+			// Output the given information to the console
+			std::cout << output;
 		}
 
 	private:
