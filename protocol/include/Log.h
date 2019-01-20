@@ -20,9 +20,9 @@ namespace AjaxCatalyst
 		void start();
 		void stop();
 
-		Log& operator<<(std::ostream& output)
+		template <typename T>
+		Log& operator<<(const T& output)
 		{
-			// Output the given information to the console
 			std::cout << output;
 		}
 
