@@ -8,10 +8,10 @@ AjaxCatalyst::Log::~Log()
 
 void AjaxCatalyst::Log::start()
 {
-	mFile.open(mFilename);
+	// mFile.open(mFilename);
 }
 
 void AjaxCatalyst::Log::stop()
 {
-	mFile.close();
+	// mFile.close();
 }

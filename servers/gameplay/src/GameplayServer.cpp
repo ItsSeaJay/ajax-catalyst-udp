@@ -12,7 +12,9 @@ void AjaxCatalyst::GameplayServer::start()
 
 	if (mSocket.bind(mPort) == sf::Socket::Done)
 	{
-		mLog << "Started an AjaxCatalystGameplayServer on port " << "...\n";
+		mLog << "Started an AjaxCatalystGameplayServer on port "
+		     << mPort
+		     << "...\n";
 		
 		// Add the listening socket to the selector for later use
 		mSocketSelector.add(mSocket);
@@ -29,6 +31,8 @@ void AjaxCatalyst::GameplayServer::start()
 
 void AjaxCatalyst::GameplayServer::listen()
 {
+	mLog << "Begun listening to network traffic..."<< "\n";
+
 	while (isOnline())
 	{
 		if (mSocketSelector.wait(sf::milliseconds(100)))

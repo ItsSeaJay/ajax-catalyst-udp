@@ -22,12 +22,9 @@ namespace AjaxCatalyst
 
 		// This overload allows for the logger class to be used like std::cout
 		template <typename T>
-		Log& operator<<(const T& output)
+		std::ostream& operator<<(const T& output)
 		{
-			mMutex.lock();
-				std::cout << output;
-				mFile << output;
-			mMutex.unlock();
+			return std::cout << output;
 		}
 
 	private:
