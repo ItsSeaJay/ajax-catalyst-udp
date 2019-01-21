@@ -102,6 +102,17 @@ void AjaxCatalyst::GameplayServer::pollEvents()
 		case sf::Event::Closed:
 			mWindow.close();
 			break;
+		case sf::Event::KeyPressed:
+			switch (event.key.code)
+			{
+			case sf::Keyboard::Escape:
+				mWindow.close();
+				break;
+			default:
+				break;
+			}
+			break;
+		// This has to be last to ensure the variable is initialised
 		case sf::Event::Resized:
 			// Update the view to the new size of the window
 			sf::FloatRect visibleArea(0, 0, float(event.size.width), float(event.size.height));
