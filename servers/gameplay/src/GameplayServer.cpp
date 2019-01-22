@@ -48,20 +48,31 @@ void AjaxCatalyst::GameplayServer::listen()
 				// React differently depending on how the packet is received
 				switch (mSocket.receive(connectionPacket, address, port))
 				{
-					case sf::Socket::Done:
-						// If the IP/Port combination is unique and
-						// the server isn't yet full
-						if (!connectionExists(address, port) &&
-							mClients.size() < mCapacity)
-						{
-							Connection* client = new Connection(address, port);
+				case sf::Socket::Done:
+					Connection* client = new Connection(address, port);
 
-							mClients.push_back(client);
-						}
-						break;
-					default:
-						mLog << "Error: Unhandled packet" << '\n';
-						break;
+					// If the IP/Port combination is unique and
+					// the server isn't yet full
+					if (!connectionExists(address, port) &&
+						mClients.size() < mCapacity)
+					{
+						mLog << "Incoming connection from "
+							<< address
+							<< ':'
+							<< port;
+
+						mClients.push_back(client);
+					}
+					else
+					{
+						mLog << "Error: server is full or connection invalid"
+							<< '\n';
+
+						// Free the connection we created from memory
+						delete client;
+						client = nullptr;
+					}
+					break;
 				}
 			}
 		}
@@ -141,6 +152,13 @@ void AjaxCatalyst::GameplayServer::stop()
 	// Unbind the UDP port so that other programs can use it
 	mSocket.unbind();
 
+	// Remove all connections from the collection
+	for (size_t client = 0; client < mClients.size(); ++client)
+	{
+		delete mClients[client];
+		mClients[client] = nullptr;
+	}
+
 	// Prevent any more output to the server log
 	mLog.stop();
 }
@@ -158,6 +176,8 @@ bool AjaxCatalyst::GameplayServer::connectionExists
 {
 	for (size_t i = 0; i < mClients.size(); i++)
 	{
+		// Connections are considered unique based on the
+		// address and port combination
 		if (mClients[i]->getIpAddress() == ip &&
 			mClients[i]->getPort() == port)
 		{
