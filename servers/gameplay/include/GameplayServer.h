@@ -30,6 +30,7 @@ namespace AjaxCatalyst
 			void stop();
 
 			bool isOnline() const;
+			bool connectionExists(const sf::IpAddress& ip, const unsigned short& port) const;
 
 		private:
 			// The log that the server will output to
@@ -39,7 +40,7 @@ namespace AjaxCatalyst
 			sf::RenderWindow mWindow;
 
 			// The port number this server is bound to
-			const unsigned short& mPort;
+			const unsigned short& mPort = 6567;
 
 			// The maximum amount of clients this server can handle
 			const unsigned short& mCapacity = 32;
@@ -51,7 +52,7 @@ namespace AjaxCatalyst
 			sf::SocketSelector mSocketSelector;
 
 			// All of the clients currently connected to the server
-			std::list<Connection*> mClients;
+			std::vector<Connection*> mClients;
 	};
 }
 

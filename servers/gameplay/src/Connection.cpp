@@ -7,3 +7,13 @@ AjaxCatalyst::Connection::Connection
 )
 : mAddress(address), mPort(port)
 {}
+
+const sf::IpAddress& AjaxCatalyst::Connection::getIpAddress() const
+{
+	return mAddress;
+}
+
+const unsigned short& AjaxCatalyst::Connection::getPort() const
+{
+	return mPort;
+}

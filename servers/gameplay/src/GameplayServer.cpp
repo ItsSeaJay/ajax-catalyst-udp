@@ -49,13 +49,18 @@ void AjaxCatalyst::GameplayServer::listen()
 				switch (mSocket.receive(connectionPacket, address, port))
 				{
 					case sf::Socket::Done:
-						mLog << "New connection attempt from "
-							<< address
-							<< ':'
-							<< port; 
+						// If the IP/Port combination is unique and
+						// the server isn't yet full
+						if (!connectionExists(address, port) &&
+							mClients.size() < mCapacity)
+						{
+							Connection* client = new Connection(address, port);
+
+							mClients.push_back(client);
+						}
 						break;
 					default:
-						std::cerr << "Error: Unhandled packet" << std::endl;
+						mLog << "Error: Unhandled packet" << '\n';
 						break;
 				}
 			}
@@ -144,3 +149,22 @@ bool AjaxCatalyst::GameplayServer::isOnline() const
 {
 	return mWindow.isOpen();
 }
+
+bool AjaxCatalyst::GameplayServer::connectionExists
+(
+	const sf::IpAddress& ip,
+	const unsigned short& port
+) const
+{
+	for (size_t i = 0; i < mClients.size(); i++)
+	{
+		if (mClients[i]->getIpAddress() == ip &&
+			mClients[i]->getPort() == port)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
