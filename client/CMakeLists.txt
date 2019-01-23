@@ -7,7 +7,7 @@ set(INCLUDES
 
 # Find the appropriate version of SFML
 # If the package can't be found, terminate the script
-find_package(SFML 2.5 COMPONENTS system graphics audio network REQUIRED)
+find_package(SFML 2.5 COMPONENTS system graphics window audio network REQUIRED)
 
 # Add the include directory
 include_directories(include)
@@ -21,6 +21,7 @@ add_executable(${PROJECT_NAME}Client
 target_link_libraries(${PROJECT_NAME}Client
                       sfml-system
                       sfml-graphics
+                      sfml-window
                       sfml-audio
                       sfml-network)
 

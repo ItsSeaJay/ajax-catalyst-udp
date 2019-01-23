@@ -5,8 +5,10 @@
 
 #include <iostream>
 
+#include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
+#include "SFML/Network.hpp"
 
 namespace AjaxCatalyst
 {
@@ -23,10 +25,23 @@ namespace AjaxCatalyst
 		void draw();
 		void stop();
 
+		// Server interaction
+		void connect();
+
+		// Determines whether the game is open or not
 		const bool& isOpen() const;
 
 	private:
+		enum class State {
+			Disconnected,
+			Connecting,
+			Connected
+		};
+		State mState = State::Disconnected;
+
 		sf::RenderWindow mWindow;
+		sf::Text mDebugText;
+		sf::UdpSocket mSocket;
 	};
 }
 
