@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "SFML/Graphics.hpp"
+
 namespace AjaxCatalyst
 {
 	class Client
@@ -12,6 +14,18 @@ namespace AjaxCatalyst
 	public:
 		Client();
 		~Client();
+
+		// Game events
+		void start();
+		void update(const float& delta);
+		void pollEvents();
+		void draw();
+		void stop();
+
+		const bool& isOpen() const;
+
+	private:
+		sf::RenderWindow mWindow;
 	};
 }
 

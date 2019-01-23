@@ -1,35 +1,38 @@
 #include <iostream>
 
 #include "Client.h"
-#include "SFML/Network.hpp"
+#include "SFML/Graphics.hpp"
 
 int main(int argc, char** argv)
 {
-	sf::UdpSocket socket;
 	AjaxCatalyst::Client* client = new AjaxCatalyst::Client();
+	sf::Clock clock;
+	sf::Time lag = sf::Time::Zero;
+	const sf::Time frameLimit = sf::seconds(1.0f / 60.0f); // 60 FPS limit
 
-	if (socket.bind(sf::Socket::AnyPort) == sf::Socket::Done)
+	client->start();
+
+	while (client->isOpen())
 	{
-		sf::Packet packet;
-		sf::IpAddress address = "localhost";
-		const unsigned short port = 6567;
-		std::string message;
+		// Get how much time has elapsed since the game started
+		sf::Time elapsedTime = clock.restart();
 
-		std::cout << "Started a client on port "
-		          << socket.getLocalPort()
-		          << "..."
-		          << std::endl;
+		// Accumulate lag depending on how long the frame took to render
+		lag += elapsedTime;
 
-		packet << message;
+		// Perform gameplay functions until there is no lag left
+		while (lag > frameLimit)
+		{
+			lag -= frameLimit;
 
-		socket.send(packet, address, port);
+			client->update(frameLimit.asSeconds());
+			client->pollEvents();
+		}
+
+		client->draw();
 	}
-	else
-	{
-		std::cerr << "Failed to bind socket.";
 
-		return EXIT_FAILURE;
-	}
+	client->stop();
 
 	// Deallocate the memory for the client
 	delete client;

@@ -48,6 +48,8 @@ void AjaxCatalyst::GameplayServer::listen()
 				// React differently depending on how the packet is received
 				switch (mSocket.receive(connectionPacket, address, port))
 				{
+				default:
+					break;
 				case sf::Socket::Done:
 					Connection* client = new Connection(address, port);
 
