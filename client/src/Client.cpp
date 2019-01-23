@@ -11,12 +11,10 @@ void AjaxCatalyst::Client::start()
 	// Attempt to create a new window
 	mWindow.create(sf::VideoMode(1024, 768), "AjaxCatalystClient");
 
-	// Attempt to create and set a font for the debug text
-	sf::Font font;
-
-	if (font.loadFromFile("Assets/Fonts/Roboto/Roboto-Regular.ttf"))
+	// Load the fonts
+	if (mFont.loadFromFile("Assets/Fonts/Roboto/Roboto-Regular.ttf"))
 	{
-		mDebugText.setFont(font);
+		mText.setFont(mFont);
 	}
 }
 
@@ -25,13 +23,13 @@ void AjaxCatalyst::Client::update(const float& delta)
 	switch (mState)
 	{
 	case AjaxCatalyst::Client::State::Disconnected:
-		mDebugText.setString("Disconnected.\nClick to connect.");
+		mText.setString("Disconnected.\nClick to connect.");
 		break;
 	case AjaxCatalyst::Client::State::Connecting:
-		mDebugText.setString("Connecting...");
+		mText.setString("Connecting...");
 		break;
 	case AjaxCatalyst::Client::State::Connected:
-		mDebugText.setString("Connected.");
+		mText.setString("Connected.");
 		break;
 	default:
 		break;
@@ -72,7 +70,7 @@ void AjaxCatalyst::Client::pollEvents()
 void AjaxCatalyst::Client::draw()
 {
 	mWindow.clear();
-		mWindow.draw(mDebugText);
+		mWindow.draw(mText);
 	mWindow.display();
 }
 

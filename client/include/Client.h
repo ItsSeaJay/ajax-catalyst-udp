@@ -40,7 +40,8 @@ namespace AjaxCatalyst
 		State mState = State::Disconnected;
 
 		sf::RenderWindow mWindow;
-		sf::Text mDebugText;
+		sf::Font mFont;
+		sf::Text mText;
 		sf::UdpSocket mSocket;
 	};
 }
