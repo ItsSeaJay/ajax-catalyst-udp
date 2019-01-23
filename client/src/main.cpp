@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Client.h"
 #include "SFML/Graphics.hpp"
 

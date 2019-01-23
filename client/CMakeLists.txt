@@ -7,18 +7,22 @@ set(INCLUDES
 
 # Find the appropriate version of SFML
 # If the package can't be found, terminate the script
-find_package(SFML 2.5 COMPONENTS network REQUIRED)
+find_package(SFML 2.5 COMPONENTS system graphics audio network REQUIRED)
 
 # Add the include directory
 include_directories(include)
 
 # Add an executable to the project
-add_library(${PROJECT_NAME}Client
+add_executable(${PROJECT_NAME}Client
                ${SOURCES}
                ${INCLUDES})
 
 # Link the appropriate libraries
-target_link_libraries(${PROJECT_NAME}Client sfml-network)
+target_link_libraries(${PROJECT_NAME}Client
+                      sfml-system
+                      sfml-graphics
+                      sfml-audio
+                      sfml-network)
 
 if(UNIX)
 	target_link_libraries(${PROJECT_NAME}Client pthread)
