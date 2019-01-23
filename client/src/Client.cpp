@@ -10,6 +10,14 @@ void AjaxCatalyst::Client::start()
 {
 	// Attempt to create a new window
 	mWindow.create(sf::VideoMode(1024, 768), "AjaxCatalystClient");
+
+	// Attempt to create and set a font for the debug text
+	sf::Font font;
+
+	if (font.loadFromFile("Assets/Fonts/Roboto/Roboto-Regular.ttf"))
+	{
+		mDebugText.setFont(font);
+	}
 }
 
 void AjaxCatalyst::Client::update(const float& delta)
