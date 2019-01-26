@@ -16,6 +16,9 @@ void AjaxCatalyst::Client::start()
 	{
 		mText.setFont(mFont);
 	}
+
+	// Add the socket to the selector
+	mSocketSelector.add(mSocket);
 }
 
 void AjaxCatalyst::Client::update(const float& delta)
@@ -24,6 +27,11 @@ void AjaxCatalyst::Client::update(const float& delta)
 	{
 	case AjaxCatalyst::Client::State::Disconnected:
 		mText.setString("Disconnected.\nClick to connect.");
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		{
+			connect();
+		}
 		break;
 	case AjaxCatalyst::Client::State::Connecting:
 		mText.setString("Connecting...");
@@ -76,12 +84,29 @@ void AjaxCatalyst::Client::draw()
 
 void AjaxCatalyst::Client::stop()
 {
-	// Free game resources...
+	mSocket.unbind();
 }
 
 void AjaxCatalyst::Client::connect()
 {
+	sf::Packet connectionPacket;
+	sf::Packet connectionChallengeResponse;
 
+	mState = State::Connecting;
+
+	if (mSocket.bind(sf::Socket::AnyPort) == sf::Socket::Done)
+	{
+		sf::Uint64 protocolID = 0xf0381ce1a55b6bc4;
+
+		connectionPacket << protocolID;
+
+		mSocket.send
+		(
+			connectionPacket,
+			sf::IpAddress::LocalHost,
+			6567
+		);
+	}
 }
 
 const bool& AjaxCatalyst::Client::isOpen() const

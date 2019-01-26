@@ -4,6 +4,7 @@
 #define AJAX_CATALYST_CLIENT_H
 
 #include <iostream>
+#include <thread>
 
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
@@ -43,6 +44,7 @@ namespace AjaxCatalyst
 		sf::Font mFont;
 		sf::Text mText;
 		sf::UdpSocket mSocket;
+		sf::SocketSelector mSocketSelector;
 	};
 }
 
