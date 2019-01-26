@@ -27,11 +27,6 @@ void AjaxCatalyst::Client::update(const float& delta)
 	{
 	case AjaxCatalyst::Client::State::Disconnected:
 		mText.setString("Disconnected.\nClick to connect.");
-
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-		{
-			connect();
-		}
 		break;
 	case AjaxCatalyst::Client::State::Connecting:
 		mText.setString("Connecting...");
@@ -62,6 +57,14 @@ void AjaxCatalyst::Client::pollEvents()
 				mWindow.close();
 			}
 			break;
+		case sf::Event::MouseButtonPressed:
+			if (event.mouseButton.button == sf::Mouse::Left &&
+				mState == State::Disconnected)
+			{
+				// Attempt to connect to the server
+				connect();
+			}
+			break;
 		case sf::Event::Resized:
 			// Update the view to match the new size of the window
 			visibleArea.width = float(event.size.width);
@@ -87,17 +90,22 @@ void AjaxCatalyst::Client::stop()
 	mSocket.unbind();
 }
 
-void AjaxCatalyst::Client::connect()
+AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 {
 	sf::Packet connectionPacket;
-	sf::Packet connectionChallengeResponse;
+	sf::Packet serverResponse;
+	sf::IpAddress serverAddress;
+	unsigned short serverPort;
 
-	mState = State::Connecting;
+	// Let the user know that a connection attempt is being made
+	mText.setString("Connecting to server...");
 
 	if (mSocket.bind(sf::Socket::AnyPort) == sf::Socket::Done)
 	{
+		// TODO: Move this to a configuration file or something
 		sf::Uint64 protocolID = 0xf0381ce1a55b6bc4;
 
+		// Serialise and send the connection packet to the server
 		connectionPacket << protocolID;
 
 		mSocket.send
@@ -106,7 +114,22 @@ void AjaxCatalyst::Client::connect()
 			sf::IpAddress::LocalHost,
 			6567
 		);
+
+		if (mSocketSelector.wait(sf::seconds(5.0f)))
+		{
+			if (mSocketSelector.isReady(mSocket))
+			{
+				if (mSocket.receive(serverResponse, serverAddress, serverPort) == sf::Socket::Done)
+				{
+					// A response was received
+					return State::Connected;
+				}
+			}
+		}
 	}
+
+	// The connection attempt failed
+	return State::Disconnected;
 }
 
 const bool& AjaxCatalyst::Client::isOpen() const

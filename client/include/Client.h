@@ -3,9 +3,6 @@
 #ifndef AJAX_CATALYST_CLIENT_H
 #define AJAX_CATALYST_CLIENT_H
 
-#include <iostream>
-#include <thread>
-
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
@@ -26,18 +23,19 @@ namespace AjaxCatalyst
 		void draw();
 		void stop();
 
+		static enum class State {
+			Disconnected,
+			Connecting,
+			Connected
+		};
+
 		// Server interaction
-		void connect();
+		Client::State connect();
 
 		// Determines whether the game is open or not
 		const bool& isOpen() const;
 
 	private:
-		enum class State {
-			Disconnected,
-			Connecting,
-			Connected
-		};
 		State mState = State::Disconnected;
 
 		sf::RenderWindow mWindow;
