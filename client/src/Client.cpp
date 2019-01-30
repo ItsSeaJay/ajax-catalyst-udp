@@ -16,9 +16,6 @@ void AjaxCatalyst::Client::start()
 	{
 		mText.setFont(mFont);
 	}
-
-	// Add the socket to the selector
-	mSocketSelector.add(mSocket);
 }
 
 void AjaxCatalyst::Client::update(const float& delta)
@@ -102,11 +99,8 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 
 	if (mSocket.bind(sf::Socket::AnyPort) == sf::Socket::Done)
 	{
-		// TODO: Move this to a configuration file or something
-		sf::Uint64 protocolID = 0xf0381ce1a55b6bc4;
-
 		// Serialise and send the connection packet to the server
-		connectionPacket << protocolID;
+		connectionPacket << AjaxCatalyst::Protocol::ID;
 
 		mSocket.send
 		(
@@ -115,21 +109,40 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 			6567
 		);
 
-		if (mSocketSelector.wait(sf::seconds(5.0f)))
+		if (mSocketSelector.isReady(mSocket))
 		{
-			if (mSocketSelector.isReady(mSocket))
+			if (receive(mSocket, serverResponse, sf::seconds(5.0f)))
 			{
-				if (mSocket.receive(serverResponse, serverAddress, serverPort) == sf::Socket::Done)
-				{
-					// A response was received
-					return State::Connected;
-				}
+				return State::Connected;
 			}
 		}
 	}
 
 	// The connection attempt failed
 	return State::Disconnected;
+}
+
+sf::Socket::Status AjaxCatalyst::Client::receive
+(
+	sf::UdpSocket & socket,
+	sf::Packet & packet,
+	const sf::Time & timeout
+)
+{
+	sf::SocketSelector selector;
+	sf::IpAddress address;
+	unsigned short port;
+
+	selector.add(socket);
+
+	if (selector.wait(timeout))
+	{
+		return socket.receive(packet, address, port);
+	}
+	else
+	{
+		return sf::Socket::NotReady;
+	}
 }
 
 const bool& AjaxCatalyst::Client::isOpen() const

@@ -31,6 +31,12 @@ namespace AjaxCatalyst
 
 		// Server interaction
 		Client::State connect();
+		sf::Socket::Status receive
+		(
+			sf::UdpSocket& socket,
+			sf::Packet& packet,
+			const sf::Time& timeout
+		);
 
 		// Determines whether the game is open or not
 		const bool& isOpen() const;

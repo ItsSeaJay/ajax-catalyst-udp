@@ -33,7 +33,7 @@ target_link_libraries(${EXECUTABLE_NAME}
 
 # AjaxCatalystProtocol
 target_link_libraries(${EXECUTABLE_NAME}
-	AjaxCatalystProtocol)
+                      AjaxCatalystProtocol)
 
 # Also remember to link the pthread dependancy on Unix systems for concurrency
 if(UNIX)

@@ -11,6 +11,7 @@ find_package(SFML 2.5 COMPONENTS system graphics window audio network REQUIRED)
 
 # Add the include directory
 include_directories(include)
+include_directories(../../protocol/include)
 
 # Add an executable to the project
 add_executable(${PROJECT_NAME}Client
@@ -18,12 +19,17 @@ add_executable(${PROJECT_NAME}Client
                ${INCLUDES})
 
 # Link the appropriate libraries
+# SFML
 target_link_libraries(${PROJECT_NAME}Client
                       sfml-system
                       sfml-graphics
                       sfml-window
                       sfml-audio
                       sfml-network)
+
+# AjaxCatalystProtocol
+target_link_libraries(${EXECUTABLE_NAME}
+                      AjaxCatalystProtocol)
 
 if(UNIX)
 	target_link_libraries(${PROJECT_NAME}Client pthread)

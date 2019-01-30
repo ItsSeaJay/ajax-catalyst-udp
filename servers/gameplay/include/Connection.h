@@ -18,6 +18,7 @@ namespace AjaxCatalyst
 		sf::UdpSocket mSocket;
 		sf::IpAddress mAddress;
 		const unsigned short mPort;
+		sf::Uint64 mSalt;
 	};
 }
 

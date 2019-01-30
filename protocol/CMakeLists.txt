@@ -1,6 +1,8 @@
 # Create lists of all the source files used by this section of the project
 set(INCLUDES
-	include/Log.h)
+	include/Log.h
+	include/Packets.h
+	include/Protocol.h)
 set(SOURCES
     src/Log.cpp)
 
