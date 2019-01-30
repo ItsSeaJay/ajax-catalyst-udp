@@ -91,8 +91,8 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 {
 	sf::Packet connectionPacket;
 	sf::Packet serverResponse;
-	sf::IpAddress serverAddress;
-	unsigned short serverPort;
+	sf::IpAddress address;
+	unsigned short port;
 
 	// Let the user know that a connection attempt is being made
 	mText.setString("Connecting to server...");
@@ -106,16 +106,13 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 		mSocket.send
 		(
 			connectionPacket,
-			sf::IpAddress::LocalHost,
+			sf::IpAddress::LocalHost, // TODO: Make this configurable
 			6567
 		);
 
-		if (mSocketSelector.isReady(mSocket))
+		if (receive(mSocket, serverResponse, sf::seconds(5.0f)) == sf::Socket::Done)
 		{
-			if (receive(mSocket, serverResponse, sf::seconds(5.0f)))
-			{
-				return State::Connected;
-			}
+			return State::Connected;
 		}
 	}
 

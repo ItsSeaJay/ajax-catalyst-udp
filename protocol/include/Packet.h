@@ -5,6 +5,8 @@
 
 #include <cstdint>
 
+#include "Protocol.h"
+
 namespace AjaxCatalyst
 {
 	class Packet
@@ -20,7 +22,7 @@ namespace AjaxCatalyst
 
 		struct Header
 		{
-			std::uint64_t id;
+			std::uint64_t id = Protocol::ID;
 			std::uint32_t rawType;
 			Type type;
 		};

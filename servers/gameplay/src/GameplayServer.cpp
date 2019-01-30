@@ -68,14 +68,25 @@ void AjaxCatalyst::GameplayServer::listen()
 							if (header.id == AjaxCatalyst::Protocol::ID &&
 								header.type == Packet::Type::Connection)
 							{
-								// Add that client to the list and notify them that
-								// their connection was successful
 								mLog << "Incoming connection from "
 									<< address
 									<< ':'
-									<< port;
+									<< port
+									<< '\n';
 
+								// Add that client to the collection
 								mClients.push_back(client);
+
+								// Reply to the request
+								sf::Packet connectionResultPacket;
+
+								connectionResultPacket << Protocol::ID;
+								connectionResultPacket << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
+
+								mSocket.send(connectionResultPacket, address, port);
+
+								mLog << "Connection result returned to sender!"
+									<< "\n";
 							}
 							else
 							{
