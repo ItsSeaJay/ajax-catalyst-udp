@@ -1,3 +1,7 @@
+# Set the name of the executable for use later on
+set(EXECUTABLE_NAME
+    ${PROJECT_NAME}Client) # Should be `AjaxCatalystClient`
+
 # Add all the source files for the client
 set(SOURCES
     src/main.cpp
@@ -9,18 +13,18 @@ set(INCLUDES
 # If the package can't be found, terminate the script
 find_package(SFML 2.5 COMPONENTS system graphics window audio network REQUIRED)
 
-# Add the include directory
+# Add the include directories for this executable
 include_directories(include)
 include_directories(../../protocol/include)
 
 # Add an executable to the project
-add_executable(${PROJECT_NAME}Client
+add_executable(${EXECUTABLE_NAME}
                ${SOURCES}
                ${INCLUDES})
 
 # Link the appropriate libraries
 # SFML
-target_link_libraries(${PROJECT_NAME}Client
+target_link_libraries(${EXECUTABLE_NAME}
                       sfml-system
                       sfml-graphics
                       sfml-window
@@ -31,6 +35,7 @@ target_link_libraries(${PROJECT_NAME}Client
 target_link_libraries(${EXECUTABLE_NAME}
                       AjaxCatalystProtocol)
 
+# Also remember to link the pthread dependancy on Unix systems for concurrency
 if(UNIX)
-	target_link_libraries(${PROJECT_NAME}Client pthread)
+	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif(UNIX)

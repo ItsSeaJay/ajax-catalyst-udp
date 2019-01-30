@@ -101,6 +101,7 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 	{
 		// Serialise and send the connection packet to the server
 		connectionPacket << AjaxCatalyst::Protocol::ID;
+		connectionPacket << static_cast<int>(AjaxCatalyst::Packets::Connection);
 
 		mSocket.send
 		(

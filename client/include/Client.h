@@ -8,6 +8,9 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Network.hpp"
 
+#include "Protocol.h"
+#include "Packets.h"
+
 namespace AjaxCatalyst
 {
 	class Client
