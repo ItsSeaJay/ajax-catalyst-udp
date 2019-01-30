@@ -11,6 +11,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Network.hpp"
 
+#include "Packets.h"
 #include "Protocol.h"
 #include "Connection.h"
 #include "Log.h"

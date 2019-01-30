@@ -5,12 +5,12 @@
 
 namespace AjaxCatalyst
 {
-	enum class Packets
+	enum class PacketType
 	{
 		Connection,
-		ConnectionChallenge
+		ConnectionChallenge,
 		ConnectionChallengeResponse
-	}
+	};
 }
 
 #endif

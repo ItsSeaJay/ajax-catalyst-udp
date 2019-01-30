@@ -56,12 +56,37 @@ void AjaxCatalyst::GameplayServer::listen()
 					if (!connectionExists(address, port) &&
 						mClients.size() < mCapacity)
 					{
-						mLog << "Incoming connection from "
-							<< address
-							<< ':'
-							<< port;
+						sf::Uint64 id;
+						sf::Uint32 type;
 
-						mClients.push_back(client);
+						// Attempt to deserialize the connection packet
+						if (connectionPacket >> id >> type)
+						{
+							// We deserialized the packet
+							// Validate its contents
+							if (id == AjaxCatalyst::Protocol::ID &&
+								static_cast<AjaxCatalyst::PacketType>(type) == PacketType::Connection)
+							{
+								mLog << "Incoming connection from "
+									<< address
+									<< ':'
+									<< port;
+
+								mClients.push_back(client);
+							}
+							else
+							{
+								mLog << "Error: Invalid data"
+									<< '\n';
+
+								mLog << id << ' ' << type << '\n';
+							}
+						}
+						else
+						{
+							mLog << "Error: Failed to deserialize packet"
+								<< '\n';
+						}
 					}
 					else
 					{
