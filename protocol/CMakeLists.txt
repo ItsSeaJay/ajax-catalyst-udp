@@ -1,10 +1,11 @@
 # Create lists of all the source files used by this section of the project
 set(INCLUDES
 	include/Log.h
-	include/Packets.h
+	include/Packet.h
 	include/Protocol.h)
 set(SOURCES
-    src/Log.cpp)
+    src/Log.cpp
+    src/Packet.cpp)
 
 # Add the include directories
 include_directories(include)

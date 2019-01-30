@@ -101,7 +101,7 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 	{
 		// Serialise and send the connection packet to the server
 		connectionPacket << AjaxCatalyst::Protocol::ID;
-		connectionPacket << static_cast<int>(AjaxCatalyst::PacketType::Connection);
+		connectionPacket << static_cast<sf::Uint32>(Packet::Type::Connection);
 
 		mSocket.send
 		(
@@ -125,9 +125,9 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 
 sf::Socket::Status AjaxCatalyst::Client::receive
 (
-	sf::UdpSocket & socket,
-	sf::Packet & packet,
-	const sf::Time & timeout
+	sf::UdpSocket& socket,
+	sf::Packet& packet,
+	const sf::Time& timeout
 )
 {
 	sf::SocketSelector selector;

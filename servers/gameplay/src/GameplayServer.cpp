@@ -56,17 +56,20 @@ void AjaxCatalyst::GameplayServer::listen()
 					if (!connectionExists(address, port) &&
 						mClients.size() < mCapacity)
 					{
-						sf::Uint64 id;
-						sf::Uint32 type;
+						Packet::Header header;
 
 						// Attempt to deserialize the connection packet
-						if (connectionPacket >> id >> type)
+						if (connectionPacket >> header.id >> header.rawType)
 						{
-							// We deserialized the packet
-							// Validate its contents
-							if (id == AjaxCatalyst::Protocol::ID &&
-								static_cast<AjaxCatalyst::PacketType>(type) == PacketType::Connection)
+							// Convert the raw type into a usable enum
+							header.type = static_cast<Packet::Type>(header.rawType);
+
+							// If the deserialized packet is valid
+							if (header.id == AjaxCatalyst::Protocol::ID &&
+								header.type == Packet::Type::Connection)
 							{
+								// Add that client to the list and notify them that
+								// their connection was successful
 								mLog << "Incoming connection from "
 									<< address
 									<< ':'
@@ -79,7 +82,7 @@ void AjaxCatalyst::GameplayServer::listen()
 								mLog << "Error: Invalid data"
 									<< '\n';
 
-								mLog << id << ' ' << type << '\n';
+								mLog << header.id << ' ' << header.rawType << '\n';
 							}
 						}
 						else

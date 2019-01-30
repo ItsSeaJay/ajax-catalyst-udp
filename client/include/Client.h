@@ -9,7 +9,7 @@
 #include "SFML/Network.hpp"
 
 #include "Protocol.h"
-#include "Packets.h"
+#include "Packet.h"
 
 namespace AjaxCatalyst
 {
