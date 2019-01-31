@@ -49,9 +49,6 @@ namespace AjaxCatalyst
 
 			// The socket used to listen for new connections
 			sf::UdpSocket mSocket;
-			
-			// Multiplexer used to read from different sockets on the same thread
-			sf::SocketSelector mSocketSelector;
 
 			// All of the clients currently connected to the server
 			std::vector<Connection*> mClients;

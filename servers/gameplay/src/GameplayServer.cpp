@@ -15,9 +15,6 @@ void AjaxCatalyst::GameplayServer::start()
 		mLog << "Started an AjaxCatalystGameplayServer on port "
 		     << mPort
 		     << "...\n";
-		
-		// Add the listening socket to the selector for later use
-		mSocketSelector.add(mSocket);
 
 		// Create the graphical user interface
 		mWindow.create
@@ -31,98 +28,66 @@ void AjaxCatalyst::GameplayServer::start()
 
 void AjaxCatalyst::GameplayServer::listen()
 {
+	sf::Packet connectionPacket;
+	sf::Packet connectionResult;
 	sf::IpAddress address;
+	Packet::Header header;
 	unsigned short port;
+	Connection* client = new Connection(address, port);
 
 	mLog << "Begun listening to network traffic..."<< "\n";
 
 	while (isOnline())
 	{
-		if (mSocketSelector.wait(sf::milliseconds(100)))
+		// React differently depending on how the packet is received
+		if (mSocket.receive(connectionPacket, address, port) == sf::Socket::Done)
 		{
-			if (mSocketSelector.isReady(mSocket))
+			// Attempt to deserialize the connection packet
+			if (connectionPacket >> header.id >> header.rawType)
 			{
-				// Create containers to store the information of the
-				// pending connection
-				sf::Packet connectionPacket;
+				// Convert the raw type into a usable enum
+				header.type = static_cast<Packet::Type>(header.rawType);
 
-				// React differently depending on how the packet is received
-				switch (mSocket.receive(connectionPacket, address, port))
+				if (header.id == Protocol::ID)
 				{
-				case sf::Socket::Done:
-					Packet::Header header;
-					Connection* client = new Connection(address, port);
-
-					// Attempt to deserialize the connection packet
-					if (connectionPacket >> header.id >> header.rawType)
+					switch (header.type)
 					{
-						// Convert the raw type into a usable enum
-						header.type = static_cast<Packet::Type>(header.rawType);
-
-						if (header.id == AjaxCatalyst::Protocol::ID &&
-							header.type == Packet::Type::Connection)
+					case Packet::Type::Connection:
+						if (!connectionExists(address, port) &&
+							mClients.size() < mCapacity)
 						{
-							if (!connectionExists(address, port) &&
-								mClients.size() < mCapacity)
-							{
-								mClients.push_back(client);
-								mSocketSelector.add(client->mSocket);
-							}
-							else
-							{
-								delete client;
-								client = nullptr;
-							}
-
-							// Always reply to valid requests
-							sf::Packet connectionResult;
-
-							connectionResult << Protocol::ID;
-							connectionResult << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
-
-							mSocket.send(connectionResult, address, port);
-
-							mLog << "Connection result returned to sender!"
-								<< "\n";
+							mClients.push_back(client);
 						}
 						else
 						{
-							mLog << "Error: Invalid data"
-								<< '\n';
-
-							mLog << header.id << ' ' << header.rawType << '\n';
+							delete client;
+							client = nullptr;
 						}
+
+						// Always reply to valid requests
+						connectionResult << Protocol::ID;
+						connectionResult << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
+
+						mSocket.send(connectionResult, address, port);
+						break;
+					default:
+						break;
 					}
-					else
-					{
-						mLog << "Error: Failed to deserialize packet"
-							<< '\n';
-					}
-					break;
+				}
+				else
+				{
+					mLog << "Error: Invalid data"
+						<< '\n';
+
+					mLog << header.id << ' ' << header.rawType << '\n';
 				}
 			}
 			else
 			{
-				for (std::vector<Connection*>::iterator it = mClients.begin();
-					it != mClients.end();
-					it++)
-				{
-					// Dereference the current connection pointer
-					Connection& client = **it;
-
-					if (mSocketSelector.isReady(client.mSocket))
-					{
-						sf::Packet packet;
-
-						mLog << "Ready.\n";
-
-						if (client.mSocket.receive(packet, address, port) == sf::Socket::Done)
-						{
-							mLog << "Message received.\n";
-						}
-					}
-				}
+				mLog << "Error: Failed to deserialize packet"
+					<< '\n';
 			}
+			break;
 		}
 	}
 }
