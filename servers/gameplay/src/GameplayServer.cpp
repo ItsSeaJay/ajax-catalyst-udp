@@ -49,67 +49,50 @@ void AjaxCatalyst::GameplayServer::listen()
 				switch (mSocket.receive(connectionPacket, address, port))
 				{
 				case sf::Socket::Done:
-					Connection* client = new Connection(address, port);
+					Packet::Header header;
 
-					// If the IP/Port combination is unique and
-					// the server isn't yet full
-					if (!connectionExists(address, port) &&
-						mClients.size() < mCapacity)
+					// Attempt to deserialize the connection packet
+					if (connectionPacket >> header.id >> header.rawType)
 					{
-						Packet::Header header;
+						// Convert the raw type into a usable enum
+						header.type = static_cast<Packet::Type>(header.rawType);
 
-						// Attempt to deserialize the connection packet
-						if (connectionPacket >> header.id >> header.rawType)
+						// If the deserialized packet is valid
+						if (header.id == AjaxCatalyst::Protocol::ID &&
+							header.type == Packet::Type::Connection)
 						{
-							// Convert the raw type into a usable enum
-							header.type = static_cast<Packet::Type>(header.rawType);
+							mLog << "Incoming connection from "
+								<< address
+								<< ':'
+								<< port
+								<< '\n';
 
-							// If the deserialized packet is valid
-							if (header.id == AjaxCatalyst::Protocol::ID &&
-								header.type == Packet::Type::Connection)
-							{
-								mLog << "Incoming connection from "
-									<< address
-									<< ':'
-									<< port
-									<< '\n';
+							// Add that client to the collection
+							mClients.push_back(client);
 
-								// Add that client to the collection
-								mClients.push_back(client);
+							// Reply to the request
+							sf::Packet connectionResultPacket;
 
-								// Reply to the request
-								sf::Packet connectionResultPacket;
+							connectionResultPacket << Protocol::ID;
+							connectionResultPacket << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
 
-								connectionResultPacket << Protocol::ID;
-								connectionResultPacket << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
+							mSocket.send(connectionResultPacket, address, port);
 
-								mSocket.send(connectionResultPacket, address, port);
-
-								mLog << "Connection result returned to sender!"
-									<< "\n";
-							}
-							else
-							{
-								mLog << "Error: Invalid data"
-									<< '\n';
-
-								mLog << header.id << ' ' << header.rawType << '\n';
-							}
+							mLog << "Connection result returned to sender!"
+								<< "\n";
 						}
 						else
 						{
-							mLog << "Error: Failed to deserialize packet"
+							mLog << "Error: Invalid data"
 								<< '\n';
+
+							mLog << header.id << ' ' << header.rawType << '\n';
 						}
 					}
 					else
 					{
-						mLog << "Error: server is full or connection invalid"
+						mLog << "Error: Failed to deserialize packet"
 							<< '\n';
-
-						// Free the connection we created from memory
-						delete client;
-						client = nullptr;
 					}
 					break;
 				}

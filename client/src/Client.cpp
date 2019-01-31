@@ -59,7 +59,7 @@ void AjaxCatalyst::Client::pollEvents()
 				mState == State::Disconnected)
 			{
 				// Attempt to connect to the server
-				connect();
+				mState = connect();
 			}
 			break;
 		case sf::Event::Resized:
