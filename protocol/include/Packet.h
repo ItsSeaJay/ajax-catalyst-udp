@@ -12,7 +12,7 @@ namespace AjaxCatalyst
 	class Packet
 	{
 	public:
-		enum class Type
+		enum Type
 		{
 			Connection,
 			ConnectionChallenge,

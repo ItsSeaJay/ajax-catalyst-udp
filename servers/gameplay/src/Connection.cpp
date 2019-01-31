@@ -17,3 +17,8 @@ const unsigned short& AjaxCatalyst::Connection::getPort() const
 {
 	return mPort;
 }
+
+sf::UdpSocket& AjaxCatalyst::Connection::socket()
+{
+	return mSocket;
+}

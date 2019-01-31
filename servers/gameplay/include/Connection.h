@@ -10,15 +10,21 @@ namespace AjaxCatalyst
 	class Connection
 	{
 	public:
-		Connection(const sf::IpAddress& address, const unsigned short& port);
+		Connection
+		(
+			const sf::IpAddress& address,
+			const unsigned short& port
+		);
 
 		const sf::IpAddress& getIpAddress() const;
 		const unsigned short& getPort() const;
+		sf::UdpSocket& socket();
+
 	private:
-		sf::UdpSocket mSocket;
 		sf::IpAddress mAddress;
 		const unsigned short mPort;
 		sf::Uint64 mSalt;
+		sf::UdpSocket mSocket;
 	};
 }
 

@@ -50,6 +50,7 @@ void AjaxCatalyst::GameplayServer::listen()
 				{
 				case sf::Socket::Done:
 					Packet::Header header;
+					Connection* client = new Connection(address, port);
 
 					// Attempt to deserialize the connection packet
 					if (connectionPacket >> header.id >> header.rawType)
@@ -57,7 +58,6 @@ void AjaxCatalyst::GameplayServer::listen()
 						// Convert the raw type into a usable enum
 						header.type = static_cast<Packet::Type>(header.rawType);
 
-						// If the deserialized packet is valid
 						if (header.id == AjaxCatalyst::Protocol::ID &&
 							header.type == Packet::Type::Connection)
 						{
@@ -67,16 +67,25 @@ void AjaxCatalyst::GameplayServer::listen()
 								<< port
 								<< '\n';
 
-							// Add that client to the collection
-							mClients.push_back(client);
+							if (!connectionExists(address, port) &&
+								mClients.size() < mCapacity)
+							{
+								mClients.push_back(client);
+								mSocketSelector.add(client->socket());
+							}
+							else
+							{
+								delete client;
+								client = nullptr;
+							}
 
-							// Reply to the request
-							sf::Packet connectionResultPacket;
+							// Always reply to valid requests
+							sf::Packet connectionResult;
 
-							connectionResultPacket << Protocol::ID;
-							connectionResultPacket << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
+							connectionResult << Protocol::ID;
+							connectionResult << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
 
-							mSocket.send(connectionResultPacket, address, port);
+							mSocket.send(connectionResult, address, port);
 
 							mLog << "Connection result returned to sender!"
 								<< "\n";
@@ -209,4 +218,3 @@ bool AjaxCatalyst::GameplayServer::connectionExists
 
 	return false;
 }
-
