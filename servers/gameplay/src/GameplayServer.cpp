@@ -31,6 +31,9 @@ void AjaxCatalyst::GameplayServer::start()
 
 void AjaxCatalyst::GameplayServer::listen()
 {
+	sf::IpAddress address;
+	unsigned short port;
+
 	mLog << "Begun listening to network traffic..."<< "\n";
 
 	while (isOnline())
@@ -42,8 +45,6 @@ void AjaxCatalyst::GameplayServer::listen()
 				// Create containers to store the information of the
 				// pending connection
 				sf::Packet connectionPacket;
-				sf::IpAddress address;
-				unsigned short port;
 
 				// React differently depending on how the packet is received
 				switch (mSocket.receive(connectionPacket, address, port))
@@ -61,17 +62,11 @@ void AjaxCatalyst::GameplayServer::listen()
 						if (header.id == AjaxCatalyst::Protocol::ID &&
 							header.type == Packet::Type::Connection)
 						{
-							mLog << "Incoming connection from "
-								<< address
-								<< ':'
-								<< port
-								<< '\n';
-
 							if (!connectionExists(address, port) &&
 								mClients.size() < mCapacity)
 							{
 								mClients.push_back(client);
-								mSocketSelector.add(client->socket());
+								mSocketSelector.add(client->mSocket);
 							}
 							else
 							{
@@ -104,6 +99,28 @@ void AjaxCatalyst::GameplayServer::listen()
 							<< '\n';
 					}
 					break;
+				}
+			}
+			else
+			{
+				for (std::vector<Connection*>::iterator it = mClients.begin();
+					it != mClients.end();
+					it++)
+				{
+					// Dereference the current connection pointer
+					Connection& client = **it;
+
+					if (mSocketSelector.isReady(client.mSocket))
+					{
+						sf::Packet packet;
+
+						mLog << "Ready.\n";
+
+						if (client.mSocket.receive(packet, address, port) == sf::Socket::Done)
+						{
+							mLog << "Message received.\n";
+						}
+					}
 				}
 			}
 		}
@@ -203,7 +220,8 @@ bool AjaxCatalyst::GameplayServer::connectionExists
 (
 	const sf::IpAddress& ip,
 	const unsigned short& port
-) const
+)
+const
 {
 	for (size_t i = 0; i < mClients.size(); i++)
 	{

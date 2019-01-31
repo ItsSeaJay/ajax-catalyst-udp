@@ -18,13 +18,12 @@ namespace AjaxCatalyst
 
 		const sf::IpAddress& getIpAddress() const;
 		const unsigned short& getPort() const;
-		sf::UdpSocket& socket();
+		sf::UdpSocket mSocket;
 
 	private:
 		sf::IpAddress mAddress;
 		const unsigned short mPort;
 		sf::Uint64 mSalt;
-		sf::UdpSocket mSocket;
 	};
 }
 

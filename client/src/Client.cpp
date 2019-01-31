@@ -20,6 +20,8 @@ void AjaxCatalyst::Client::start()
 
 void AjaxCatalyst::Client::update(const float& delta)
 {
+	sf::Packet packet;
+
 	switch (mState)
 	{
 	case AjaxCatalyst::Client::State::Disconnected:
@@ -30,6 +32,10 @@ void AjaxCatalyst::Client::update(const float& delta)
 		break;
 	case AjaxCatalyst::Client::State::Connected:
 		mText.setString("Connected.");
+
+		packet << "I have a message for you.";
+
+		mSocket.send(packet, sf::IpAddress::LocalHost, 6567);
 		break;
 	default:
 		break;
@@ -93,6 +99,7 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 	sf::Packet serverResponse;
 	sf::IpAddress address;
 	unsigned short port;
+	const unsigned short attempts = 5;
 
 	// Let the user know that a connection attempt is being made
 	mText.setString("Connecting to server...");
@@ -103,12 +110,16 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 		connectionPacket << AjaxCatalyst::Protocol::ID;
 		connectionPacket << static_cast<sf::Uint32>(Packet::Type::Connection);
 
-		mSocket.send
-		(
-			connectionPacket,
-			sf::IpAddress::LocalHost, // TODO: Make this configurable
-			6567
-		);
+		// Send multiple packets to account for loss
+		for (int attempt = 0; attempt < attempts; ++attempt)
+		{
+			mSocket.send
+			(
+				connectionPacket,
+				sf::IpAddress::LocalHost, // TODO: Make this configurable
+				6567
+			);
+		}
 
 		if (receive(mSocket, serverResponse, sf::seconds(5.0f)) == sf::Socket::Done)
 		{
