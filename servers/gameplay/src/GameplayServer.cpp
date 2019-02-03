@@ -8,13 +8,21 @@ AjaxCatalyst::GameplayServer::~GameplayServer() {}
 
 void AjaxCatalyst::GameplayServer::start()
 {
+	// Seed the random number generator
+	srand(time(NULL));
 	mLog.start();
 
+	// If the port is available
 	if (mSocket.bind(mPort) == sf::Socket::Done)
 	{
 		mLog << "Started an AjaxCatalystGameplayServer on port "
 		     << mPort
 		     << "...\n";
+
+		// Obtain a random number for the server's salt value
+		mSalt = std::rand();
+
+		mLog << "Salt value: " << mSalt << '\n';
 
 		// Create the graphical user interface
 		mWindow.create
@@ -28,66 +36,21 @@ void AjaxCatalyst::GameplayServer::start()
 
 void AjaxCatalyst::GameplayServer::listen()
 {
-	sf::Packet connectionPacket;
-	sf::Packet connectionResult;
-	sf::IpAddress address;
+	sf::Packet packet;
 	Packet::Header header;
+	sf::IpAddress address;
 	unsigned short port;
-	Connection* client = new Connection(address, port);
 
-	mLog << "Begun listening to network traffic..."<< "\n";
+	mLog << "Begun listening to network traffic..." << "\n";
 
 	while (isOnline())
 	{
-		// React differently depending on how the packet is received
-		if (mSocket.receive(connectionPacket, address, port) == sf::Socket::Done)
+		if (receive(mSocket, packet, address, port, sf::seconds(5.0f)) == sf::Socket::Done)
 		{
-			// Attempt to deserialize the connection packet
-			if (connectionPacket >> header.id >> header.rawType)
+			if (valid(packet))
 			{
-				// Convert the raw type into a usable enum
-				header.type = static_cast<Packet::Type>(header.rawType);
-
-				if (header.id == Protocol::ID)
-				{
-					switch (header.type)
-					{
-					case Packet::Type::Connection:
-						if (!connectionExists(address, port) &&
-							mClients.size() < mCapacity)
-						{
-							mClients.push_back(client);
-						}
-						else
-						{
-							delete client;
-							client = nullptr;
-						}
-
-						// Always reply to valid requests
-						connectionResult << Protocol::ID;
-						connectionResult << static_cast<sf::Uint32>(Packet::Type::ConnectionResult);
-
-						mSocket.send(connectionResult, address, port);
-						break;
-					default:
-						break;
-					}
-				}
-				else
-				{
-					mLog << "Error: Invalid data"
-						<< '\n';
-
-					mLog << header.id << ' ' << header.rawType << '\n';
-				}
+				respond(packet, address, port);
 			}
-			else
-			{
-				mLog << "Error: Failed to deserialize packet"
-					<< '\n';
-			}
-			break;
 		}
 	}
 }
@@ -132,13 +95,9 @@ void AjaxCatalyst::GameplayServer::pollEvents()
 			mWindow.close();
 			break;
 		case sf::Event::KeyPressed:
-			switch (event.key.code)
+			if (event.key.code == sf::Keyboard::Escape)
 			{
-			case sf::Keyboard::Escape:
 				mWindow.close();
-				break;
-			default:
-				break;
 			}
 			break;
 		// This has to be last to ensure the variable is initialised
@@ -165,13 +124,6 @@ void AjaxCatalyst::GameplayServer::stop()
 	// Unbind the UDP port so that other programs can use it
 	mSocket.unbind();
 
-	// Remove all connections from the collection
-	for (size_t client = 0; client < mClients.size(); ++client)
-	{
-		delete mClients[client];
-		mClients[client] = nullptr;
-	}
-
 	// Prevent any more output to the server log
 	mLog.stop();
 }
@@ -181,23 +133,64 @@ bool AjaxCatalyst::GameplayServer::isOnline() const
 	return mWindow.isOpen();
 }
 
-bool AjaxCatalyst::GameplayServer::connectionExists
-(
-	const sf::IpAddress& ip,
-	const unsigned short& port
-)
-const
+void AjaxCatalyst::GameplayServer::respond(sf::Packet packet, const sf::IpAddress& address, const unsigned short& port)
 {
-	for (size_t i = 0; i < mClients.size(); i++)
+	Packet::Header header;
+	sf::Packet response;
+
+	if (packet >> header.id >> header.rawType)
 	{
-		// Connections are considered unique based on the
-		// address and port combination
-		if (mClients[i]->getIpAddress() == ip &&
-			mClients[i]->getPort() == port)
+		header.type = static_cast<Packet::Type>(header.rawType);
+
+		switch (header.type)
+		{
+		case Packet::Type::Connection:
+			response << Protocol::ID;
+			response << static_cast<Packet::Type>(Packet::Type::ConnectionResult);
+
+			mSocket.send(response, address, port);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+bool AjaxCatalyst::GameplayServer::valid(sf::Packet packet)
+{
+	Packet::Header header;
+
+	if (packet >> header.id >> header.rawType)
+	{
+		if (header.id == Protocol::ID)
 		{
 			return true;
 		}
 	}
 
 	return false;
+}
+
+const sf::Socket::Status& AjaxCatalyst::GameplayServer::receive
+(
+	sf::UdpSocket& socket,
+	sf::Packet& packet,
+	sf::IpAddress& address,
+	unsigned short& port,
+	const sf::Time& timeout
+)
+const
+{
+	sf::SocketSelector selector;
+
+	selector.add(socket);
+
+	if (selector.wait(timeout))
+	{
+		return socket.receive(packet, address, port);
+	}
+	else
+	{
+		return sf::Socket::NotReady;
+	}
 }

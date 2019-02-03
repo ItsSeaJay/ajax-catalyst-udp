@@ -3,9 +3,10 @@
 #ifndef AJAX_CATALYST_GAMEPLAY_SERVER_H
 #define AJAX_CATALYST_GAMEPLAY_SERVER_H
 
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include <list>
-#include <mutex>
 
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -32,26 +33,40 @@ namespace AjaxCatalyst
 			void stop();
 
 			bool isOnline() const;
-			bool connectionExists(const sf::IpAddress& ip, const unsigned short& port) const;
 
+			const sf::Socket::Status& receive
+			(
+				sf::UdpSocket& socket,
+				sf::Packet& packet,
+				sf::IpAddress& address,
+				unsigned short& port,
+				const sf::Time& timeout
+			) const;
+			
 		private:
+			// The port number this server is bound to
+			const unsigned short mPort = 6567;
+
+			// The maximum amount of clients this server can handle
+			const unsigned short mCapacity = 32;
+
 			// The log that the server will output to
 			Log mLog;
+
+			// The unique number used to identify this server
+			sf::Uint32 mSalt;
 
 			// The graphical user interface of the server
 			sf::RenderWindow mWindow;
 
-			// The port number this server is bound to
-			const unsigned short& mPort = 6567;
-
-			// The maximum amount of clients this server can handle
-			const unsigned short& mCapacity = 32;
-
 			// The socket used to listen for new connections
 			sf::UdpSocket mSocket;
+	
+			// Respond to a given packet
+			void respond(sf::Packet packet, const sf::IpAddress& address, const unsigned short& port);
 
-			// All of the clients currently connected to the server
-			std::vector<Connection*> mClients;
+			// Used to validate incoming packets
+			bool valid(sf::Packet packet);
 	};
 }
 

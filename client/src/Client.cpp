@@ -32,10 +32,6 @@ void AjaxCatalyst::Client::update(const float& delta)
 		break;
 	case AjaxCatalyst::Client::State::Connected:
 		mText.setString("Connected.");
-
-		packet << "I have a message for you.";
-
-		mSocket.send(packet, sf::IpAddress::LocalHost, 6567);
 		break;
 	default:
 		break;
@@ -101,8 +97,7 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 	unsigned short port;
 	const unsigned short attempts = 5;
 
-	// Let the user know that a connection attempt is being made
-	mText.setString("Connecting to server...");
+	mText.setString("Connecting...");
 
 	if (mSocket.bind(sf::Socket::AnyPort) == sf::Socket::Done)
 	{
@@ -121,7 +116,7 @@ AjaxCatalyst::Client::State AjaxCatalyst::Client::connect()
 			);
 		}
 
-		if (receive(mSocket, serverResponse, sf::seconds(5.0f)) == sf::Socket::Done)
+		if (receive(mSocket, serverResponse, sf::milliseconds(100)) == sf::Socket::Done)
 		{
 			return State::Connected;
 		}

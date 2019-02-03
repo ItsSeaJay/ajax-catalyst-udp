@@ -15,8 +15,6 @@ namespace AjaxCatalyst
 		enum Type
 		{
 			Connection,
-			ConnectionChallenge,
-			ConnectionChallengeResponse,
 			ConnectionResult
 		};
 
