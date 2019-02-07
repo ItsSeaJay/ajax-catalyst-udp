@@ -19,7 +19,7 @@
 			"file": "servers/gameplay/include/GameplayServer.h",
 			"settings":
 			{
-				"buffer_size": 1033,
+				"buffer_size": 783,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -28,7 +28,7 @@
 			"file": "servers/gameplay/src/GameplayServer.cpp",
 			"settings":
 			{
-				"buffer_size": 2607,
+				"buffer_size": 1925,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -89,6 +89,7 @@
 	],
 	"file_history":
 	[
+		"/B/MEGA/PROJECTS/ajax-catalyst/.gitignore",
 		"/B/MEGA/PROJECTS/ajax-catalyst/servers/gameplay/CMakeLists.txt",
 		"/B/MEGA/PROJECTS/ajax-catalyst/client/CMakeLists.txt",
 		"/B/MEGA/PROJECTS/ajax-catalyst/build/servers/gameplay/Listener.cpp",
@@ -164,15 +165,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1033,
+						"buffer_size": 783,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								796,
-								796
+								0,
+								0
 							]
 						],
 						"settings":
@@ -181,7 +182,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 270.0,
+						"translation.y": 239.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -193,15 +194,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2607,
+						"buffer_size": 1925,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								399,
-								399
+								0,
+								0
 							]
 						],
 						"settings":

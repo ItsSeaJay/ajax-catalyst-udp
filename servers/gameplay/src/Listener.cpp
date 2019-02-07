@@ -16,6 +16,7 @@ void AjaxCatalyst::Listener::stop()
 
 const sf::Socket::Status& AjaxCatalyst::Listener::receive
 (
+	sf::UdpSocket& socket,
 	sf::Packet& packet,
 	sf::IpAddress& address,
 	unsigned short& port,
@@ -25,5 +26,14 @@ const
 {
 	sf::SocketSelector selector;
 
-	return sf::Socket::NotReady;
+	selector.add(socket);
+
+	if (selector.wait(timeout))
+	{
+		return socket.receive(packet, address, port);
+	}
+	else
+	{
+		return sf::Socket::NotReady;
+	}
 }

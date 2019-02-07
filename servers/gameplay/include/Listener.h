@@ -20,6 +20,7 @@ namespace AjaxCatalyst
 
 		const sf::Socket::Status& receive
 		(
+			sf::UdpSocket& socket,
 			sf::Packet& packet,
 			sf::IpAddress& address,
 			unsigned short& port,
