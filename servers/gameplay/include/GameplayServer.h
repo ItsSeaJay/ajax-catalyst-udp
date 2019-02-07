@@ -53,9 +53,6 @@ namespace AjaxCatalyst
 			// The log that the server will output to
 			Log mLog;
 
-			// The unique number used to identify this server
-			sf::Uint32 mSalt;
-
 			// The graphical user interface of the server
 			sf::RenderWindow mWindow;
 

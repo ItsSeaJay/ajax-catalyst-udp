@@ -8,8 +8,6 @@ AjaxCatalyst::GameplayServer::~GameplayServer() {}
 
 void AjaxCatalyst::GameplayServer::start()
 {
-	// Seed the random number generator
-	srand(time(NULL));
 	mLog.start();
 
 	// If the port is available
@@ -18,11 +16,6 @@ void AjaxCatalyst::GameplayServer::start()
 		mLog << "Started an AjaxCatalystGameplayServer on port "
 		     << mPort
 		     << "...\n";
-
-		// Obtain a random number for the server's salt value
-		mSalt = std::rand();
-
-		mLog << "Salt value: " << mSalt << '\n';
 
 		// Create the graphical user interface
 		mWindow.create
@@ -133,7 +126,12 @@ bool AjaxCatalyst::GameplayServer::isOnline() const
 	return mWindow.isOpen();
 }
 
-void AjaxCatalyst::GameplayServer::respond(sf::Packet packet, const sf::IpAddress& address, const unsigned short& port)
+void AjaxCatalyst::GameplayServer::respond
+(
+	sf::Packet packet,
+	const sf::IpAddress& address,
+	const unsigned short& port
+)
 {
 	Packet::Header header;
 	sf::Packet response;
