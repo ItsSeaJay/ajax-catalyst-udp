@@ -4,99 +4,33 @@
 		"selected_items":
 		[
 			[
-				"target",
-				"target_link_libraries\tcommand"
+				"PROJECT",
+				"PROJECT_SOURCE_DIR\tbuiltin"
 			],
 			[
-				"in",
+				"inc",
 				"include_directories\tcommand"
-			],
-			[
-				"includ",
-				"include_directories"
-			],
-			[
-				"frame",
-				"frameLimit"
-			],
-			[
-				"ela",
-				"elapsedTime"
-			],
-			[
-				"update",
-				"updateThread"
-			],
-			[
-				"m",
-				"mWindow"
-			],
-			[
-				"g",
-				"GameplayServer"
-			],
-			[
-				"fram",
-				"frameLimit"
-			],
-			[
-				"el",
-				"elapsedTime"
-			],
-			[
-				"Aja",
-				"AjaxCatalyst"
-			],
-			[
-				"mS",
-				"mSocket"
-			],
-			[
-				"con",
-				"connectionPacket"
-			],
-			[
-				"mSo",
-				"mSocketSelector"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "servers/gameplay/src/main.cpp",
-			"settings":
-			{
-				"buffer_size": 737,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "servers/gameplay/include/GameplayServer.h",
 			"settings":
 			{
-				"buffer_size": 1116,
+				"buffer_size": 1033,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "servers/gameplay/CMakeLists.txt",
-			"settings":
-			{
-				"buffer_size": 1535,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "servers/gameplay/src/GameplayServer.cpp",
 			"settings":
 			{
-				"buffer_size": 2804,
+				"buffer_size": 2607,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -112,48 +46,20 @@
 		"selected_items":
 		[
 			[
-				"cmake",
-				"Set Syntax: CMake"
+				"add ",
+				"Project: Add Folder"
 			],
 			[
 				"install",
 				"Package Control: Install Package"
 			],
 			[
-				"package",
-				"Package Control: Remove Package"
-			],
-			[
-				"instal",
-				"Package Control: Install Package"
-			],
-			[
-				"pack",
-				"Install Package Control"
-			],
-			[
-				"pre",
-				"Preferences: Settings"
-			],
-			[
-				"wor",
-				"Word Wrap: Toggle"
-			],
-			[
-				"pref",
-				"Preferences: Settings"
-			],
-			[
-				"c++",
-				"Set Syntax: C++"
-			],
-			[
-				"prefere",
-				"Preferences: Settings"
-			],
-			[
 				"add",
 				"Project: Add Folder"
+			],
+			[
+				"prefer",
+				"Preferences: Settings"
 			]
 		],
 		"width": 0.0
@@ -176,49 +82,53 @@
 	},
 	"expanded_folders":
 	[
-		"/home/callum/Projects/ajax-catalyst",
-		"/home/callum/Projects/ajax-catalyst/client",
-		"/home/callum/Projects/ajax-catalyst/client/include",
-		"/home/callum/Projects/ajax-catalyst/client/src",
-		"/home/callum/Projects/ajax-catalyst/servers",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/include",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/src"
+		"/B/MEGA/PROJECTS/ajax-catalyst",
+		"/B/MEGA/PROJECTS/ajax-catalyst/servers",
+		"/B/MEGA/PROJECTS/ajax-catalyst/servers/gameplay",
+		"/B/MEGA/PROJECTS/ajax-catalyst/servers/gameplay/include"
 	],
 	"file_history":
 	[
-		"/home/callum/Projects/ajax-catalyst/.gitignore",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/src/GraphicalUserInterface.cpp",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/include/GraphicalUserInterface.h",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/src/Connection.cpp",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/include/Connection.h",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/CMakeLists.txt",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/src/main.cpp",
-		"/home/callum/Projects/ajax-catalyst/HEADER.txt",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/src/GameplayServer.cpp",
-		"/home/callum/Projects/ajax-catalyst/client/include/Client.h",
-		"/home/callum/Projects/ajax-catalyst/client/src/Client.cpp",
-		"/home/callum/Projects/ajax-catalyst/client/src/main.cpp",
-		"/home/callum/Projects/ajax-catalyst/client/CMakeLists.txt",
-		"/home/callum/Projects/ajax-catalyst/servers/gameplay/include/GameplayServer.h",
-		"/home/callum/Projects/ajax-catalyst/protocol/CMakeLists.txt",
-		"/home/callum/Projects/ajax-catalyst/protocol/README.md",
-		"/home/callum/Projects/ajax-catalyst/servers/chatting/CMakeLists.txt",
-		"/home/callum/Projects/ajax-catalyst/CMakeLists.txt",
-		"/home/callum/Projects/ajax-catalyst/servers/README.md",
-		"/home/callum/Projects/ajax-catalyst/servers/CMakeLists.txt",
-		"/home/callum/Projects/ajax-catalyst/client/README.md"
+		"/B/MEGA/PROJECTS/ajax-catalyst/servers/gameplay/CMakeLists.txt",
+		"/B/MEGA/PROJECTS/ajax-catalyst/client/CMakeLists.txt",
+		"/B/MEGA/PROJECTS/ajax-catalyst/build/servers/gameplay/Listener.cpp",
+		"/C/Users/Callum/Downloads/lastpass-export.csv",
+		"/B/MEGA/PROJECTS/ajax-catalyst/client/src/main.cpp",
+		"/B/MEGA/PROJECTS/ajax-catalyst/client/src/Client.cpp",
+		"/B/MEGA/PROJECTS/ajax-catalyst/client/include/Client.h",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/CMakeLists.txt",
+		"/B/MEGA/PROJECTS/ajax-catalyst/servers/gameplay/include/GameplayServer.h",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/include/Packet.h",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/src/Packet.cpp",
+		"/B/MEGA/PROJECTS/ajax-catalyst/servers/gameplay/src/GameplayServer.cpp",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/include/Protocol.h",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/include/Packets.h",
+		"/B/Godot/3.0.6/Demos/PythonScript/pythonscript.gdnlib",
+		"/E/Passwords.txt",
+		"/B/MEGA/PROJECTS/ajax-catalyst/CMakeLists.txt",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/include/Log.h",
+		"/B/MEGA/PROJECTS/ajax-catalyst/protocol/src/Log.cpp",
+		"/B/MEGA/PROJECTS/www/index.html",
+		"/B/MEGA/RPG/Dungeons & Dragons/5e/Characters/Human/Monk/Bob/Fiction/After Baerynn/plan.txt",
+		"/B/PuTTY/README.txt",
+		"/C/Users/Callum/AppData/Local/Temp/fz3temp-2/authorized_keys",
+		"/B/MEGA/PROJECTS/sea-jay-blog/_posts/2019-01-05-hosting-drawpile.md",
+		"/B/MEGA/PROJECTS/sea-jay-blog/_drafts/2019-01-05-hosting-drawpile.md",
+		"/B/MEGA/PROJECTS/sea-jay-blog/_posts/2018-07-08-how-to-find-sfml-2.5.0-with-cmake.md",
+		"/B/MEGA/PROJECTS/sea-jay-blog/_posts/2018-01-05-hosting-drawpile.md",
+		"/B/clonehero-win64/README.txt",
+		"/B/GOG Galaxy/Games/Momodora - Reverie Under the Moonlight/language/en/sentences.msf",
+		"/C/Users/Callum/AppData/Roaming/DS4Windows/Profiles/Default.xml"
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 27.0
 	},
 	"find_in_files":
 	{
-		"height": 101.0,
+		"height": 104.0,
 		"where_history":
 		[
-			"servers/gameplay/*"
 		]
 	},
 	"find_state":
@@ -226,16 +136,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"pollEvents",
-			"isWindowOpen",
-			"done",
-			"Done",
-			"done",
-			"Server",
-			"GameplayServer",
-			"Server",
-			"acgs",
-			"cmake_minimum_required"
+			"${PROJECT_NAME}"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -243,6 +144,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"${EXECUTABLE_NAME}"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -253,131 +155,65 @@
 	"groups":
 	[
 		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 0,
-					"file": "servers/gameplay/src/main.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 737,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								737,
-								737
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "servers/gameplay/include/GameplayServer.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1116,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								302,
-								302
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 102.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "servers/gameplay/CMakeLists.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1535,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								351,
-								351
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CMake/CMake.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 389.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
-			]
-		},
-		{
 			"selected": 0,
 			"sheets":
 			[
 				{
-					"buffer": 3,
-					"file": "servers/gameplay/src/GameplayServer.cpp",
+					"buffer": 0,
+					"file": "servers/gameplay/include/GameplayServer.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2804,
+						"buffer_size": 1033,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1654,
-								1654
+								796,
+								796
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 867.0,
+						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "servers/gameplay/src/GameplayServer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2607,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								399,
+								399
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1296.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -385,11 +221,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 27.0
 	},
 	"input":
 	{
-		"height": 38.0
+		"height": 39.0
 	},
 	"layout":
 	{
@@ -400,18 +236,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -429,7 +258,7 @@
 	"project": "ajax-catalyst.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -439,28 +268,64 @@
 		"selected_items":
 		[
 			[
-				"conn",
-				"servers/gameplay/src/Connection.cpp"
+				"gameplay",
+				"servers\\gameplay\\src\\GameplayServer.cpp"
+			],
+			[
+				"listener",
+				"build\\servers\\gameplay\\Listener.cpp"
+			],
+			[
+				"client cma",
+				"client\\CMakeLists.txt"
+			],
+			[
+				"client.cpp",
+				"client\\src\\Client.cpp"
+			],
+			[
+				"client",
+				"client\\include\\Client.h"
+			],
+			[
+				"main.cpp",
+				"client\\src\\main.cpp"
 			],
 			[
 				"main",
-				"servers/gameplay/src/main.cpp"
+				"client\\src\\main.cpp"
+			],
+			[
+				"cmake",
+				"protocol\\CMakeLists.txt"
 			],
 			[
 				"cmakelists.txt",
-				"protocol/CMakeLists.txt"
+				"client\\CMakeLists.txt"
+			],
+			[
+				"game",
+				"servers\\gameplay\\include\\GameplayServer.h"
+			],
+			[
+				"server",
+				"servers\\gameplay\\src\\GameplayServer.cpp"
+			],
+			[
+				"108",
+				"_posts\\2018-07-08-how-to-find-sfml-2.5.0-with-cmake.md"
 			]
 		],
 		"width": 0.0
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
@@ -479,7 +344,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 140.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
