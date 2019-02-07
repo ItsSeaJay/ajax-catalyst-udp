@@ -9,6 +9,10 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 
+# Ignore the Sublime Text project
+*.sublime-project
+*.sublime-workspace
+
 # Also ignore the build folder
 build
 build/
