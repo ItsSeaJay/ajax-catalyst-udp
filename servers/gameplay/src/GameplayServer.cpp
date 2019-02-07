@@ -150,8 +150,6 @@ void AjaxCatalyst::GameplayServer::respond(sf::Packet packet, const sf::IpAddres
 
 			mSocket.send(response, address, port);
 			break;
-		default:
-			break;
 		}
 	}
 }

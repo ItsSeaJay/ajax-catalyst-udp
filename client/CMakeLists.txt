@@ -15,7 +15,7 @@ find_package(SFML 2.5 COMPONENTS system graphics window audio network REQUIRED)
 
 # Add the include directories for this executable
 include_directories(include)
-include_directories(../../protocol/include)
+include_directories(${PROJECT_SOURCE_DIR}/protocol/include)
 
 # Add an executable to the project
 add_executable(${EXECUTABLE_NAME}
